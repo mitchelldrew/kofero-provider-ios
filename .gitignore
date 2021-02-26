@@ -1,0 +1,4 @@
+build/
+presenter.framework/
+Pods/
+.DS_Store
