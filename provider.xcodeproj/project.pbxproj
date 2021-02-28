@@ -11,7 +11,11 @@
 		4B7E601C25E9A497009684AE /* presenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7E601A25E9A387009684AE /* presenter.framework */; platformFilter = ios; };
 		4B7E601D25E9A497009684AE /* presenter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7E601A25E9A387009684AE /* presenter.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4B7E602025E9A4E4009684AE /* ImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E601F25E9A4E4009684AE /* ImageProvider.swift */; };
-		4B7E602225E9A95B009684AE /* RestClosure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E602125E9A95B009684AE /* RestClosure.swift */; };
+		4B7E602425E9ADE1009684AE /* RestClosure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E602325E9ADE1009684AE /* RestClosure.swift */; };
+		4B7E602625E9AE41009684AE /* GameProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E602525E9AE41009684AE /* GameProvider.swift */; };
+		4B7E602825E9D458009684AE /* IMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E602725E9D458009684AE /* IMapper.swift */; };
+		4B7E602A25E9D593009684AE /* DataSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E602925E9D593009684AE /* DataSerializer.swift */; };
+		4B7E602D25EAEAA3009684AE /* GameSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E602C25EAEAA3009684AE /* GameSerializer.swift */; };
 		79C4FBB896F25C3AA573EA61 /* Pods_provider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BE1F54D244B84048D74B04B /* Pods_provider.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,7 +39,11 @@
 		4B7E601025E9A28D009684AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B7E601A25E9A387009684AE /* presenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = presenter.framework; sourceTree = "<group>"; };
 		4B7E601F25E9A4E4009684AE /* ImageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProvider.swift; sourceTree = "<group>"; };
-		4B7E602125E9A95B009684AE /* RestClosure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestClosure.swift; sourceTree = "<group>"; };
+		4B7E602325E9ADE1009684AE /* RestClosure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestClosure.swift; sourceTree = "<group>"; };
+		4B7E602525E9AE41009684AE /* GameProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameProvider.swift; sourceTree = "<group>"; };
+		4B7E602725E9D458009684AE /* IMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMapper.swift; sourceTree = "<group>"; };
+		4B7E602925E9D593009684AE /* DataSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSerializer.swift; sourceTree = "<group>"; };
+		4B7E602C25EAEAA3009684AE /* GameSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSerializer.swift; sourceTree = "<group>"; };
 		6BE1F54D244B84048D74B04B /* Pods_provider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_provider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C50E7745291AF43C5A2ED528 /* Pods-provider.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-provider.debug.xcconfig"; path = "Target Support Files/Pods-provider/Pods-provider.debug.xcconfig"; sourceTree = "<group>"; };
 		F95E9E2B149EDFE776ED29D9 /* Pods-provider.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-provider.release.xcconfig"; path = "Target Support Files/Pods-provider/Pods-provider.release.xcconfig"; sourceTree = "<group>"; };
@@ -75,12 +83,24 @@
 		4B7E600E25E9A28D009684AE /* provider */ = {
 			isa = PBXGroup;
 			children = (
+				4B7E602B25E9D795009684AE /* json */,
 				4B7E600F25E9A28D009684AE /* provider.h */,
 				4B7E601025E9A28D009684AE /* Info.plist */,
 				4B7E601F25E9A4E4009684AE /* ImageProvider.swift */,
-				4B7E602125E9A95B009684AE /* RestClosure.swift */,
+				4B7E602325E9ADE1009684AE /* RestClosure.swift */,
+				4B7E602525E9AE41009684AE /* GameProvider.swift */,
+				4B7E602725E9D458009684AE /* IMapper.swift */,
 			);
 			path = provider;
+			sourceTree = "<group>";
+		};
+		4B7E602B25E9D795009684AE /* json */ = {
+			isa = PBXGroup;
+			children = (
+				4B7E602925E9D593009684AE /* DataSerializer.swift */,
+				4B7E602C25EAEAA3009684AE /* GameSerializer.swift */,
+			);
+			path = json;
 			sourceTree = "<group>";
 		};
 		5328F4BB79914B5631C49B3F /* Pods */ = {
@@ -207,8 +227,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B7E602825E9D458009684AE /* IMapper.swift in Sources */,
+				4B7E602D25EAEAA3009684AE /* GameSerializer.swift in Sources */,
 				4B7E602025E9A4E4009684AE /* ImageProvider.swift in Sources */,
-				4B7E602225E9A95B009684AE /* RestClosure.swift in Sources */,
+				4B7E602425E9ADE1009684AE /* RestClosure.swift in Sources */,
+				4B7E602625E9AE41009684AE /* GameProvider.swift in Sources */,
+				4B7E602A25E9D593009684AE /* DataSerializer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,6 +378,7 @@
 				);
 				INFOPLIST_FILE = provider/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -385,6 +410,7 @@
 				);
 				INFOPLIST_FILE = provider/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

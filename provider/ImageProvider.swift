@@ -59,8 +59,6 @@ open class ImageProvider: IImageProvider {
         }
     }
     
-    
-    
     public func get(url: String) {
         getFromDisk(url: url)
         if let uRL = URL(string: url) {
