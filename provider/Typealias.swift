@@ -8,3 +8,4 @@
 import Foundation
 
 typealias RestClosure = (Data?, URLResponse?, Error?) -> Void
+typealias CompletionBlock = () -> Void

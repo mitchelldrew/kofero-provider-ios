@@ -11,9 +11,12 @@ import presenter
 open class GameProvider: IGameProvider {
     private var listeners = [IGameProviderListener]()
     private var games = [ModelGame]()
+    private var lastGet:Int64 = 0
     private let serializer:GameSeralizer
     private let urlSession:URLSession
     private let fileManager:FileManager
+    private let JSON_FILENAME = "games.json"
+    private let PULL_TIMER_MILLIS = 100000
     private let gamesUrl:URL
     
     init(urlSession:URLSession, fileManager:FileManager, serializer:GameSeralizer, gamesUrl:URL){
@@ -23,22 +26,28 @@ open class GameProvider: IGameProvider {
         self.serializer = serializer
     }
     
-    private func getRestClosure() -> RestClosure {
+    private func getRestClosure(completionBlock: @escaping CompletionBlock) -> RestClosure {
         return { [self] data,response,error in
             if let uResponse = response as? HTTPURLResponse {
-                if(uResponse.statusCode != 200) { informListenersError(id: 0)}
+                if(uResponse.statusCode != 200) { informListenersError(id: 0, error: KotlinException(message: "bad status: \(uResponse)")) }
                 if let uData = data {
-                    let newGames = serializer.map(data: uData)
-                    informListeners(games: newGames)
-                    saveToDisk()
+                    games = serializer.map(data: uData)
+                    informListeners(games: games)
+                    saveToDisk(data: uData)
+                    completionBlock()
                 }
             }
             else{informListenersUnexpectedError()}
         }
     }
     
-    private func saveToDisk(){
-        
+    private func saveToDisk(data:Data){
+        if let url = URL(string: fileManager.currentDirectoryPath + JSON_FILENAME) {
+            do { try data.write(to: url) }
+            catch {
+                informListenersError(id: 0, error: KotlinException(message: "failed to write"))
+            }
+        }
     }
     
     private func informListenersUnexpectedError(){
@@ -47,12 +56,11 @@ open class GameProvider: IGameProvider {
         }
     }
     
-    private func informListenersError(id:Int32){
+    private func informListenersError(id:Int32, error:KotlinException){
         for listener in listeners {
-            listener.onError(id: id, error: KotlinException())
+            listener.onError(id: id, error: error)
         }
     }
-    
     
     private func informListeners(id:Int32, game:ModelGame){
         for listener in listeners {
@@ -66,24 +74,38 @@ open class GameProvider: IGameProvider {
         }
     }
     
-    private func getFromDisk(){
-        
-    }
-    
-    private func getFromDisk(id:Int32){
-        
+    private func getFromDisk(completionBlock: @escaping ([ModelGame])->Void){
+        DispatchQueue.global().async { [self] in
+            if(fileManager.fileExists(atPath: fileManager.currentDirectoryPath + JSON_FILENAME)){
+                if let uData = fileManager.contents(atPath: fileManager.currentDirectoryPath + JSON_FILENAME){
+                    games = serializer.map(data: uData)
+                    completionBlock(games)
+                }
+            }
+        }
     }
     
     public func get() {
-        getFromDisk()
-        urlSession.dataTask(with: gamesUrl, completionHandler: getRestClosure())
+        let date = Date().currentTimeMillis()
+        getFromDisk{games in self.informListeners(games: games)}
+        if(lastGet == 0 || date - lastGet > PULL_TIMER_MILLIS){
+            lastGet = date
+            urlSession.dataTask(with: gamesUrl, completionHandler: getRestClosure{})
+        }
+    }
+    
+    private func inform(id:Int32, games:[ModelGame]){
+            let game = games.filter {game in game.id == id}
+            if(game.count == 1){ informListeners(id: id, game: game[0]) }
+            if(game.count > 1){informListenersError(id: id, error: KotlinException(message: "collision"))}
     }
     
     public func get(id: Int32) {
+        if(games.count == 0){
+            getFromDisk{games in self.inform(id: id, games: games) }
+            urlSession.dataTask(with: gamesUrl, completionHandler: getRestClosure { self.get(id: id) }) }
         if(games.contains{game in return game.id == id}){
-            let game = games.filter {game in game.id == id}
-            if(game.count == 1){ informListeners(id: id, game: game[0]) }
-            
+            inform(id: id, games: games)
         }
     }
     
