@@ -13,14 +13,14 @@ open class GameProvider: IGameProvider {
     private var games = [ModelGame]()
     private var lastGet:Int64 = 0
     private let serializer:GameSeralizer
-    private let urlSession:URLSession
-    private let fileManager:FileManager
+    private let restManager:IRestManager
+    private let fileManager:IFileManager
     private let JSON_FILENAME = "games.json"
     private let PULL_TIMER_MILLIS = 100000
     private let gamesUrl:URL
     
-    init(urlSession:URLSession, fileManager:FileManager, serializer:GameSeralizer, gamesUrl:URL){
-        self.urlSession = urlSession
+    init(restManager:IRestManager, fileManager:IFileManager, serializer:GameSeralizer, gamesUrl:URL){
+        self.restManager = restManager
         self.fileManager = fileManager
         self.gamesUrl = gamesUrl
         self.serializer = serializer
@@ -90,7 +90,7 @@ open class GameProvider: IGameProvider {
         getFromDisk{games in self.informListeners(games: games)}
         if(lastGet == 0 || date - lastGet > PULL_TIMER_MILLIS){
             lastGet = date
-            urlSession.dataTask(with: gamesUrl, completionHandler: getRestClosure{})
+            restManager.dataTask(with: URLRequest(url: gamesUrl), completionHandler: getRestClosure{}).resume()
         }
     }
     
@@ -103,7 +103,7 @@ open class GameProvider: IGameProvider {
     public func get(id: Int32) {
         if(games.count == 0){
             getFromDisk{games in self.inform(id: id, games: games) }
-            urlSession.dataTask(with: gamesUrl, completionHandler: getRestClosure { self.get(id: id) }) }
+            restManager.dataTask(with: URLRequest(url: gamesUrl), completionHandler: getRestClosure { self.get(id: id) }).resume() }
         if(games.contains{game in return game.id == id}){
             inform(id: id, games: games)
         }
