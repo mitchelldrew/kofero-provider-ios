@@ -7,9 +7,11 @@
 
 import Foundation
 import presenter
+import SwiftyJSON
 
 class GameSeralizer: DataSerializer<[ModelGame]> {
-    override func map(data: Data) -> [ModelGame] {
-        
+    override func map(data: Data) throws -> [ModelGame] {
+        var ret = [ModelGame]()
+        return ret
     }
 }

@@ -10,5 +10,5 @@ import Foundation
 protocol IMapper {
     associatedtype I
     associatedtype O
-    func map(data:I) -> O
+    func map(data:I) throws -> O
 }

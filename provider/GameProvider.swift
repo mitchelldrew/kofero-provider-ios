@@ -31,10 +31,14 @@ open class GameProvider: IGameProvider {
             if let uResponse = response as? HTTPURLResponse {
                 if(uResponse.statusCode != 200) { informListenersError(id: 0, error: KotlinException(message: "bad status: \(uResponse)")) }
                 if let uData = data {
-                    games = serializer.map(data: uData)
-                    informListeners(games: games)
-                    saveToDisk(data: uData)
-                    completionBlock()
+                    do { games = try serializer.map(data: uData)
+                        informListeners(games: games)
+                        saveToDisk(data: uData)
+                        completionBlock()
+                    }
+                    catch {
+                        informListenersError(id: 0, error: KotlinException(message: error.localizedDescription))
+                    }
                 }
             }
             else{informListenersUnexpectedError()}
@@ -78,8 +82,13 @@ open class GameProvider: IGameProvider {
         DispatchQueue.global().async { [self] in
             if(fileManager.fileExists(atPath: fileManager.currentDirectoryPath + JSON_FILENAME)){
                 if let uData = fileManager.contents(atPath: fileManager.currentDirectoryPath + JSON_FILENAME){
-                    games = serializer.map(data: uData)
-                    completionBlock(games)
+                    do {
+                        games = try serializer.map(data: uData)
+                        completionBlock(games)
+                    }
+                    catch {
+                        informListenersError(id: 0, error: KotlinException(message: error.localizedDescription))
+                    }
                 }
             }
         }
@@ -95,15 +104,16 @@ open class GameProvider: IGameProvider {
     }
     
     private func inform(id:Int32, games:[ModelGame]){
-            let game = games.filter {game in game.id == id}
-            if(game.count == 1){ informListeners(id: id, game: game[0]) }
-            if(game.count > 1){informListenersError(id: id, error: KotlinException(message: "collision"))}
+        let game = games.filter {game in game.id == id}
+        if(game.count == 1){ informListeners(id: id, game: game[0]) }
+        if(game.count > 1){informListenersError(id: id, error: KotlinException(message: "collision"))}
     }
     
     public func get(id: Int32) {
-        if(games.count == 0){
+        if(games.count == 0) {
             getFromDisk{games in self.inform(id: id, games: games) }
-            restManager.dataTask(with: URLRequest(url: gamesUrl), completionHandler: getRestClosure { self.get(id: id) }).resume() }
+            restManager.dataTask(with: URLRequest(url: gamesUrl), completionHandler: getRestClosure { self.get(id: id) }).resume()
+        }
         if(games.contains{game in return game.id == id}){
             inform(id: id, games: games)
         }

@@ -6,5 +6,6 @@ target 'provider' do
   use_frameworks!
 
   # Pods for provider
+pod 'SwiftyJSON', '~> 4.3.0'
 
 end
