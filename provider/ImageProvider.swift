@@ -10,11 +10,11 @@ import presenter
 
 open class ImageProvider: IImageProvider {
     private var listeners = [IImageProviderListener]()
-    private let urlSession:URLSession
-    private let fileManager:FileManager
+    private let restManager:IRestManager
+    private let fileManager:IFileManager
     
-    init(urlSession:URLSession, fileManager:FileManager){
-        self.urlSession = urlSession
+    init(restManager:IRestManager, fileManager:IFileManager){
+        self.restManager = restManager
         self.fileManager = fileManager
     }
     
@@ -62,7 +62,7 @@ open class ImageProvider: IImageProvider {
     public func get(url: String) {
         getFromDisk(url: url)
         if let uRL = URL(string: url) {
-            urlSession.dataTask(with: uRL, completionHandler: getRestClosure(url:url))
+            restManager.dataTask(with: URLRequest(url: uRL), completionHandler: getRestClosure(url:url)).resume()
         }
     }
     
