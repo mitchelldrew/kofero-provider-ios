@@ -12,14 +12,14 @@ open class GameProvider: IGameProvider {
     private var listeners = [IGameProviderListener]()
     private var games = [ModelGame]()
     private var lastGet:Int64 = 0
-    private let serializer:GameSeralizer
+    private let serializer:GameSerializer
     private let restManager:IRestManager
     private let fileManager:IFileManager
     private let JSON_FILENAME = "games.json"
     private let PULL_TIMER_MILLIS = 100000
     private let gamesUrl:URL
     
-    init(restManager:IRestManager, fileManager:IFileManager, serializer:GameSeralizer, gamesUrl:URL){
+    public init(restManager:IRestManager, fileManager:IFileManager, serializer:GameSerializer, gamesUrl:URL){
         self.restManager = restManager
         self.fileManager = fileManager
         self.gamesUrl = gamesUrl

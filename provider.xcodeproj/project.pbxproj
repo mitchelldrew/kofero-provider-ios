@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4B7E601125E9A28D009684AE /* provider.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B7E600F25E9A28D009684AE /* provider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4B7E601C25E9A497009684AE /* presenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7E601A25E9A387009684AE /* presenter.framework */; platformFilter = ios; };
-		4B7E601D25E9A497009684AE /* presenter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7E601A25E9A387009684AE /* presenter.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4B7E602025E9A4E4009684AE /* ImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E601F25E9A4E4009684AE /* ImageProvider.swift */; };
 		4B7E602425E9ADE1009684AE /* Typealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E602325E9ADE1009684AE /* Typealias.swift */; };
 		4B7E602625E9AE41009684AE /* GameProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E602525E9AE41009684AE /* GameProvider.swift */; };
@@ -17,22 +16,8 @@
 		4B7E602A25E9D593009684AE /* DataSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E602925E9D593009684AE /* DataSerializer.swift */; };
 		4B7E602D25EAEAA3009684AE /* GameSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E602C25EAEAA3009684AE /* GameSerializer.swift */; };
 		4B9F8DB625EC5343007F330C /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F8DB525EC5343007F330C /* Extension.swift */; };
-		79C4FBB896F25C3AA573EA61 /* Pods_provider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BE1F54D244B84048D74B04B /* Pods_provider.framework */; };
+		4B9F8DBF25F2AC01007F330C /* Pods_provider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BE1F54D244B84048D74B04B /* Pods_provider.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		4B7E601E25E9A497009684AE /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				4B7E601D25E9A497009684AE /* presenter.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4B7E600C25E9A28D009684AE /* provider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = provider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,8 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79C4FBB896F25C3AA573EA61 /* Pods_provider.framework in Frameworks */,
 				4B7E601C25E9A497009684AE /* presenter.framework in Frameworks */,
+				4B9F8DBF25F2AC01007F330C /* Pods_provider.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,7 +132,6 @@
 				4B7E600825E9A28D009684AE /* Sources */,
 				4B7E600925E9A28D009684AE /* Frameworks */,
 				4B7E600A25E9A28D009684AE /* Resources */,
-				4B7E601E25E9A497009684AE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

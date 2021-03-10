@@ -9,7 +9,9 @@ import Foundation
 import presenter
 import SwiftyJSON
 
-class GameSeralizer: DataSerializer<[ModelGame]> {
+public class GameSerializer: DataSerializer<[ModelGame]> {
+    public override init() {}
+    
     override func map(data: Data) throws -> [ModelGame] {
         let json = try JSON(data: data)
         var ret = [ModelGame]()

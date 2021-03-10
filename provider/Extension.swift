@@ -14,19 +14,19 @@ extension Date {
     }
 }
 
-protocol IRestTask {
+public protocol IRestTask {
   func resume()
   func cancel()
 }
 
-protocol IRestManager {
+public protocol IRestManager {
   func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask
 }
 
 extension URLSession : IRestManager{}
 extension URLSessionDataTask : IRestTask{}
 
-protocol IFileManager {
+public protocol IFileManager {
     var currentDirectoryPath: String {get}
     func fileExists(atPath:String) -> Bool
     func contents(atPath:String) -> Data?

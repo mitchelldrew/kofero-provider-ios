@@ -13,7 +13,7 @@ open class ImageProvider: IImageProvider {
     private let restManager:IRestManager
     private let fileManager:IFileManager
     
-    init(restManager:IRestManager, fileManager:IFileManager){
+    public init(restManager:IRestManager, fileManager:IFileManager){
         self.restManager = restManager
         self.fileManager = fileManager
     }
