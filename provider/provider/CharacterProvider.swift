@@ -8,7 +8,7 @@
 import Foundation
 import presenter
 
-class CharacterProvider: ICharacterProvider {
+open class CharacterProvider: ICharacterProvider {
     private var listeners = [ICharacterProviderListener]()
     private var characters = [ModelCharacter]()
     private let restManager:IRestManager
@@ -23,15 +23,15 @@ class CharacterProvider: ICharacterProvider {
         self.url = charUrl
     }
     
-    func get(id: Int32) {
+    public func get(id: Int32) {
         
     }
     
-    func removeListener(charListener: ICharacterProviderListener) {
+    public func removeListener(charListener: ICharacterProviderListener) {
         listeners.removeAll{listener in return listener === charListener}
     }
     
-    func addListener(charListener: ICharacterProviderListener) {
+    public func addListener(charListener: ICharacterProviderListener) {
         listeners.append(charListener)
     }
     

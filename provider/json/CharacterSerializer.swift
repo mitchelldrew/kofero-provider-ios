@@ -9,7 +9,7 @@ import Foundation
 import presenter
 import SwiftyJSON
 
-class CharacterSerializer:DataSerializer<[ModelCharacter]>{
+public class CharacterSerializer:DataSerializer<[ModelCharacter]>{
     public override init(){}
     
     override func map(data: Data) throws -> [ModelCharacter] {
