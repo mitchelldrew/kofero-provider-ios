@@ -97,10 +97,14 @@ open class GameProvider: IGameProvider {
     public func get() {
         let date = Date().currentTimeMillis()
         getFromDisk{games in self.informListeners(games: games)}
-        if(lastGet == 0 || date - lastGet > PULL_TIMER_MILLIS){
+        if(isDatePastPullTimer(date:date)){
             lastGet = date
             restManager.dataTask(with: URLRequest(url: gamesUrl), completionHandler: getRestClosure{}).resume()
         }
+    }
+    
+    private func isDatePastPullTimer(date:Int64) -> Bool {
+        return date - lastGet > PULL_TIMER_MILLIS
     }
     
     private func inform(id:Int32, games:[ModelGame]){
@@ -110,7 +114,8 @@ open class GameProvider: IGameProvider {
     }
     
     public func get(id: Int32) {
-        if(games.count == 0) {
+        let date = Date().currentTimeMillis()
+        if(games.count == 0 && isDatePastPullTimer(date:date)) {
             getFromDisk{games in self.inform(id: id, games: games) }
             restManager.dataTask(with: URLRequest(url: gamesUrl), completionHandler: getRestClosure { self.get(id: id) }).resume()
         }
