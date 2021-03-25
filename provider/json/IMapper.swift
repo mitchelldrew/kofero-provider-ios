@@ -11,4 +11,5 @@ protocol IMapper {
     associatedtype I
     associatedtype O
     func map(data:I) throws -> O
+    func map(data:O) throws -> I
 }

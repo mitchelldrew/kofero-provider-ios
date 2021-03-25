@@ -9,7 +9,13 @@ import Foundation
 import presenter
 
 open class DataMapper<O>: IMapper {
+    typealias I = Data
+    
     func map(data: Data) throws -> O {
+        fatalError("Override me!")
+    }
+    
+    func map(data: O) throws -> Data {
         fatalError("Override me!")
     }
 }

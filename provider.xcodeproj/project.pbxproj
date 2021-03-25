@@ -14,8 +14,8 @@
 		4B7E602425E9ADE1009684AE /* Typealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E602325E9ADE1009684AE /* Typealias.swift */; };
 		4B7E602625E9AE41009684AE /* GameProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E602525E9AE41009684AE /* GameProvider.swift */; };
 		4B7E602825E9D458009684AE /* IMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E602725E9D458009684AE /* IMapper.swift */; };
-		4B7E602A25E9D593009684AE /* DataSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E602925E9D593009684AE /* DataSerializer.swift */; };
-		4B7E602D25EAEAA3009684AE /* GameSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E602C25EAEAA3009684AE /* GameSerializer.swift */; };
+		4B7E602A25E9D593009684AE /* DataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E602925E9D593009684AE /* DataMapper.swift */; };
+		4B7E602D25EAEAA3009684AE /* GameMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E602C25EAEAA3009684AE /* GameMapper.swift */; };
 		4B9F8DB625EC5343007F330C /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F8DB525EC5343007F330C /* Extension.swift */; };
 		4B9F8DBF25F2AC01007F330C /* Pods_provider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BE1F54D244B84048D74B04B /* Pods_provider.framework */; };
 		4B9F8EC625F956F0007F330C /* CharacterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F8EC525F956F0007F330C /* CharacterProvider.swift */; };
@@ -33,8 +33,8 @@
 		4B7E602325E9ADE1009684AE /* Typealias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typealias.swift; sourceTree = "<group>"; };
 		4B7E602525E9AE41009684AE /* GameProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameProvider.swift; sourceTree = "<group>"; };
 		4B7E602725E9D458009684AE /* IMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMapper.swift; sourceTree = "<group>"; };
-		4B7E602925E9D593009684AE /* DataSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSerializer.swift; sourceTree = "<group>"; };
-		4B7E602C25EAEAA3009684AE /* GameSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSerializer.swift; sourceTree = "<group>"; };
+		4B7E602925E9D593009684AE /* DataMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMapper.swift; sourceTree = "<group>"; };
+		4B7E602C25EAEAA3009684AE /* GameMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMapper.swift; sourceTree = "<group>"; };
 		4B9F8DB525EC5343007F330C /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		4B9F8EC525F956F0007F330C /* CharacterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterProvider.swift; sourceTree = "<group>"; };
 		4B9F8EC825F956FC007F330C /* MoveProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveProvider.swift; sourceTree = "<group>"; };
@@ -92,8 +92,8 @@
 			isa = PBXGroup;
 			children = (
 				4B7E602725E9D458009684AE /* IMapper.swift */,
-				4B7E602925E9D593009684AE /* DataSerializer.swift */,
-				4B7E602C25EAEAA3009684AE /* GameSerializer.swift */,
+				4B7E602925E9D593009684AE /* DataMapper.swift */,
+				4B7E602C25EAEAA3009684AE /* GameMapper.swift */,
 				4B9F8ECB25F991C2007F330C /* CharacterSerializer.swift */,
 				4B78BFD125FC5E9A0015BFD7 /* MoveSerializer.swift */,
 			);
@@ -235,13 +235,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B7E602825E9D458009684AE /* IMapper.swift in Sources */,
-				4B7E602D25EAEAA3009684AE /* GameSerializer.swift in Sources */,
+				4B7E602D25EAEAA3009684AE /* GameMapper.swift in Sources */,
 				4B9F8EC625F956F0007F330C /* CharacterProvider.swift in Sources */,
 				4B9F8EC925F956FC007F330C /* MoveProvider.swift in Sources */,
 				4B7E602025E9A4E4009684AE /* ImageProvider.swift in Sources */,
 				4B7E602425E9ADE1009684AE /* Typealias.swift in Sources */,
 				4B7E602625E9AE41009684AE /* GameProvider.swift in Sources */,
-				4B7E602A25E9D593009684AE /* DataSerializer.swift in Sources */,
+				4B7E602A25E9D593009684AE /* DataMapper.swift in Sources */,
 				4B78BFD225FC5E9A0015BFD7 /* MoveSerializer.swift in Sources */,
 				4B9F8DB625EC5343007F330C /* Extension.swift in Sources */,
 				4B9F8ECC25F991C2007F330C /* CharacterSerializer.swift in Sources */,

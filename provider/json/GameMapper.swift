@@ -9,16 +9,25 @@ import Foundation
 import presenter
 import SwiftyJSON
 
-public class GameSerializer: DataSerializer<[ModelGame]> {
+public protocol IGameMapper {
+    func map(data:Data) throws -> [ModelGame]
+    func map(data:[ModelGame]) throws -> Data
+}
+
+public class GameMapper: DataMapper<[ModelGame]>, IGameMapper {
     public override init() {}
     
-    override func map(data: Data) throws -> [ModelGame] {
+    public override func map(data: Data) throws -> [ModelGame] {
         let json = try JSON(data: data)
         var ret = [ModelGame]()
         for element in json.arrayValue {
             ret.append(serialize(json: element))
         }
         return ret
+    }
+    
+    public override func map(data: [ModelGame]) throws -> Data {
+        
     }
     
     private func serialize(json:JSON) -> ModelGame{
