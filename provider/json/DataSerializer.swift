@@ -8,7 +8,7 @@
 import Foundation
 import presenter
 
-open class DataSerializer<O>: IMapper {
+open class DataMapper<O>: IMapper {
     func map(data: Data) throws -> O {
         fatalError("Override me!")
     }

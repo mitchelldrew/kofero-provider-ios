@@ -15,113 +15,101 @@ open class GameProvider: IGameProvider {
     private let serializer:GameSerializer
     private let restManager:IRestManager
     private let fileManager:IFileManager
+    private let gamesUrl:URL
+    private var requests = [[KotlinInt]]()
+    private var isDiskPulled = false
+    private let userDefaults: IUserDefaults
+    
     private let JSON_FILENAME = "games.json"
     private let PULL_TIMER_MILLIS = 100000
-    private let gamesUrl:URL
+    private let PULL_TIMER_KEY = "pulltimer"
     
-    public init(restManager:IRestManager, fileManager:IFileManager, serializer:GameSerializer, gamesUrl:URL){
+    public init(restManager:IRestManager, fileManager:IFileManager, serializer:GameSerializer, userDefaults:IUserDefaults, gamesUrl:URL){
         self.restManager = restManager
         self.fileManager = fileManager
         self.gamesUrl = gamesUrl
         self.serializer = serializer
+        self.userDefaults = userDefaults
     }
     
-    private func getRestClosure(completionBlock: @escaping CompletionBlock) -> RestClosure {
-        return { [self] data,response,error in
-            if let uResponse = response as? HTTPURLResponse {
-                if(uResponse.statusCode != 200) { informListenersError(id: 0, error: KotlinException(message: "bad status: \(uResponse)")) }
-                if let uData = data {
-                    do { games = try serializer.map(data: uData)
-                        informListeners(games: games)
-                        saveToDisk(data: uData)
-                        completionBlock()
-                    }
-                    catch {
-                        informListenersError(id: 0, error: KotlinException(message: error.localizedDescription))
-                    }
-                }
+    public func get(ids: [KotlinInt]) {
+        if(!isDiskPulled){
+            pullFromDisk(ids: ids)
+        }
+        else{
+            if(isSatisfiable(request: ids)){ informListeners(ids: ids, games: retrieve(ids: ids)) }
+            else{
+                requests.append(ids)
+                restManager.dataTask(with: createRequest(ids: ids), completionHandler: getRestClosure(ids: ids)).resume()
             }
-            else{informListenersUnexpectedError()}
         }
     }
     
-    private func saveToDisk(data:Data){
-        if let url = URL(string: fileManager.currentDirectoryPath + JSON_FILENAME) {
-            do { try data.write(to: url) }
+    private func getRestClosure(ids: [KotlinInt]) -> RestClosure {
+        return {[self] data, response, error in
+            if(isResponseGood(data:data, response:response, error:error)){
+                do{ addGames(newGames: try serializer.map(data: data!)) }
+                catch { informListenersError(ids: ids, error: KotlinException(message: error.localizedDescription)) }
+            }
+            else{
+                informListenersError(ids: ids, error: KotlinException(message: "error:\(error.debugDescription), response: \(response.debugDescription)"))
+            }
+        }
+    }
+    
+    private func isResponseGood(data:Data?, response:URLResponse?, error:Error?) -> Bool {
+        return data != nil && (response as! HTTPURLResponse).statusCode == 200 && error == nil
+    }
+    
+    private func createRequest(ids: [KotlinInt]) -> URLRequest {
+        var ret = URLRequest(url: gamesUrl)
+        ret.httpBody = 
+        
+    }
+    
+    private func addGames(newGames:[ModelGame]){
+        for game in newGames {
+            games.removeAll(where: {existingGame in return game.id == existingGame.id})
+            games.append(game)
+        }
+    }
+    
+    private func pullFromDisk(ids: [KotlinInt]){
+        isDiskPulled = true
+        requests.append(ids)
+        if let json = fileManager.contents(atPath: fileManager.currentDirectoryPath + JSON_FILENAME) {
+            do{
+                games = try serializer.map(data: json)
+            }
             catch {
-                informListenersError(id: 0, error: KotlinException(message: "failed to write"))
+                informListenersError(ids: ids, error: KotlinException(message: "serialization error"))
+            }
+        }
+        restManager.dataTask(with: createRequest(ids: ids), completionHandler: getRestClosure(ids: ids)).resume()
+    }
+    
+    private func satisfyRequests(){
+        for request in requests {
+            if(isSatisfiable(request: request)){
+                informListeners(ids: request, games: retrieve(ids: request))
+                requests.removeAll(where: {comparison in return comparison == request})
             }
         }
     }
     
-    private func informListenersUnexpectedError(){
-        for listener in listeners {
-            listener.onError(id: 0, error: KotlinException(message: "unexpected error"))
+    private func isSatisfiable(request: [KotlinInt]) -> Bool {
+        for id in request {
+            if(!games.contains(where: {game in return game.id == id.int32Value})){ return false }
         }
+        return true
     }
     
-    private func informListenersError(id:Int32, error:KotlinException){
-        for listener in listeners {
-            listener.onError(id: id, error: error)
+    private func retrieve(ids: [KotlinInt]) -> [ModelGame] {
+        var ret = [ModelGame]()
+        for id in ids {
+            ret.append(games.first(where: {game in return game.id == id.int32Value})!)
         }
-    }
-    
-    private func informListeners(id:Int32, game:ModelGame){
-        for listener in listeners {
-            listener.onReceive(id: id, game: game)
-        }
-    }
-    
-    private func informListeners(games:[ModelGame]){
-        for listener in listeners {
-            listener.onReceive(games: games)
-        }
-    }
-    
-    private func getFromDisk(completionBlock: @escaping ([ModelGame])->Void){
-        DispatchQueue.global().async { [self] in
-            if(fileManager.fileExists(atPath: fileManager.currentDirectoryPath + JSON_FILENAME)){
-                if let uData = fileManager.contents(atPath: fileManager.currentDirectoryPath + JSON_FILENAME){
-                    do {
-                        games = try serializer.map(data: uData)
-                        completionBlock(games)
-                    }
-                    catch {
-                        informListenersError(id: 0, error: KotlinException(message: error.localizedDescription))
-                    }
-                }
-            }
-        }
-    }
-    
-    public func get() {
-        let date = Date().currentTimeMillis()
-        getFromDisk{games in self.informListeners(games: games)}
-        if(isDatePastPullTimer(date:date)){
-            lastGet = date
-            restManager.dataTask(with: URLRequest(url: gamesUrl), completionHandler: getRestClosure{}).resume()
-        }
-    }
-    
-    private func isDatePastPullTimer(date:Int64) -> Bool {
-        return date - lastGet > PULL_TIMER_MILLIS
-    }
-    
-    private func inform(id:Int32, games:[ModelGame]){
-        let game = games.filter {game in game.id == id}
-        if(game.count == 1){ informListeners(id: id, game: game[0]) }
-        if(game.count > 1){informListenersError(id: id, error: KotlinException(message: "collision"))}
-    }
-    
-    public func get(id: Int32) {
-        let date = Date().currentTimeMillis()
-        if(games.count == 0 && isDatePastPullTimer(date:date)) {
-            getFromDisk{games in self.inform(id: id, games: games) }
-            restManager.dataTask(with: URLRequest(url: gamesUrl), completionHandler: getRestClosure { self.get(id: id) }).resume()
-        }
-        if(games.contains{game in return game.id == id}){
-            inform(id: id, games: games)
-        }
+        return ret
     }
     
     public func removeListener(gameListener: IGameProviderListener) {
@@ -130,5 +118,15 @@ open class GameProvider: IGameProvider {
     
     public func addListener(gameListener: IGameProviderListener) {
         listeners.append(gameListener)
+    }
+    
+    private func informListenersError(ids:[KotlinInt], error:KotlinException){
+        for listener in listeners {
+            listener.onError(ids: ids, error: error)
+        }
+    }
+    
+    private func informListeners(ids: [KotlinInt], games: [ModelGame]){
+        for listener in listeners { listener.onReceive(ids: ids, games: games) }
     }
 }
