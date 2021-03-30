@@ -15,7 +15,12 @@ public protocol IGameMapper {
 }
 
 public class GameMapper: DataMapper<[ModelGame]>, IGameMapper {
-    public override init() {}
+    private let encoder:IEncoder
+    
+    public init(encoder:IEncoder) {
+        self.encoder = encoder
+        super.init()
+    }
     
     public override func map(data: Data) throws -> [ModelGame] {
         let json = try JSON(data: data)
@@ -27,7 +32,16 @@ public class GameMapper: DataMapper<[ModelGame]>, IGameMapper {
     }
     
     public override func map(data: [ModelGame]) throws -> Data {
-        
+        var json = [JSON]()
+        for game in data {
+            var gameJson = JSON()
+            gameJson["id"].int32 = game.id
+            gameJson["name"].string = game.name
+            gameJson["charIds"].arrayObject = game.charIds
+            gameJson["iconUrl"].string = game.iconUrl
+            json.append(gameJson)
+        }
+        return try encoder.encode(json)
     }
     
     private func serialize(json:JSON) -> ModelGame{

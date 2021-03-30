@@ -47,3 +47,43 @@ public protocol IFileManager {
 
 extension FileManager: IFileManager{}
 
+protocol HasApply { }
+
+extension HasApply {
+    func apply(closure:(Self) -> ()) -> Self {
+        closure(self)
+        return self
+    }
+}
+
+extension ModelGame{
+    var charIds: [Int32] {
+        var ret = [Int32]()
+        for charId in self.characterIds {
+            ret.append(charId.int32Value)
+        }
+        return ret
+    }
+}
+
+extension ModelCharacter{
+    var mvIds: [Int32] {
+        var ret = [Int32]()
+        for moveId in self.moveIds {
+            ret.append(moveId.int32Value)
+        }
+        return ret
+    }
+}
+
+
+
+public protocol IEncoder{
+    func encode(_ value: Encodable) throws -> Data
+}
+
+extension JSONEncoder: IEncoder {
+    public func encode(_ value: Encodable) throws -> Data {
+        return try encode(value)
+    }
+}

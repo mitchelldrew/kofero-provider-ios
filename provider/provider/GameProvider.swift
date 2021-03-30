@@ -19,17 +19,19 @@ open class GameProvider: IGameProvider {
     private var requests = [[KotlinInt]]()
     private var isDiskPulled = false
     private let userDefaults: IUserDefaults
+    private let encoder:IEncoder
     
     private let JSON_FILENAME = "games.json"
     private let PULL_TIMER_MILLIS = 100000
     private let PULL_TIMER_KEY = "pulltimer"
     
-    public init(restManager:IRestManager, fileManager:IFileManager, mapper:IGameMapper, userDefaults:IUserDefaults, gamesUrl:URL){
+    public init(restManager:IRestManager, fileManager:IFileManager, mapper:IGameMapper, userDefaults:IUserDefaults, gamesUrl:URL, encoder:IEncoder){
         self.restManager = restManager
         self.fileManager = fileManager
         self.gamesUrl = gamesUrl
         self.mapper = mapper
         self.userDefaults = userDefaults
+        self.encoder = encoder
     }
     
     public func get(ids: [KotlinInt]) {
@@ -63,8 +65,14 @@ open class GameProvider: IGameProvider {
     
     private func createRequest(ids: [KotlinInt]) -> URLRequest {
         var ret = URLRequest(url: gamesUrl)
-        ret.httpBody = 
-        
+        var ids32 = [Int32]()
+        for id in ids{ ids32.append(id.int32Value) }
+        do{
+            try ret.httpBody = encoder.encode(ids32)
+        }
+        catch {
+            informListenersError(ids: ids, error: KotlinException(message: "request body encoding failed"))
+        }
     }
     
     private func addGames(newGames:[ModelGame]){
