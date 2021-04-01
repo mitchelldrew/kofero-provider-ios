@@ -21,6 +21,7 @@
 		4B9F8EC625F956F0007F330C /* CharacterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F8EC525F956F0007F330C /* CharacterProvider.swift */; };
 		4B9F8EC925F956FC007F330C /* MoveProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F8EC825F956FC007F330C /* MoveProvider.swift */; };
 		4B9F8ECC25F991C2007F330C /* CharacterMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F8ECB25F991C2007F330C /* CharacterMapper.swift */; };
+		4BC42D1A261612010008C96A /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC42D19261612010008C96A /* Provider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		4B9F8EC525F956F0007F330C /* CharacterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterProvider.swift; sourceTree = "<group>"; };
 		4B9F8EC825F956FC007F330C /* MoveProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveProvider.swift; sourceTree = "<group>"; };
 		4B9F8ECB25F991C2007F330C /* CharacterMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterMapper.swift; sourceTree = "<group>"; };
+		4BC42D19261612010008C96A /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		6BE1F54D244B84048D74B04B /* Pods_provider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_provider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C50E7745291AF43C5A2ED528 /* Pods-provider.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-provider.debug.xcconfig"; path = "Target Support Files/Pods-provider/Pods-provider.debug.xcconfig"; sourceTree = "<group>"; };
 		F95E9E2B149EDFE776ED29D9 /* Pods-provider.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-provider.release.xcconfig"; path = "Target Support Files/Pods-provider/Pods-provider.release.xcconfig"; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				4B7E602525E9AE41009684AE /* GameProvider.swift */,
 				4B9F8EC525F956F0007F330C /* CharacterProvider.swift */,
 				4B9F8EC825F956FC007F330C /* MoveProvider.swift */,
+				4BC42D19261612010008C96A /* Provider.swift */,
 			);
 			path = provider;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 				4B7E602D25EAEAA3009684AE /* GameMapper.swift in Sources */,
 				4B9F8EC625F956F0007F330C /* CharacterProvider.swift in Sources */,
 				4B9F8EC925F956FC007F330C /* MoveProvider.swift in Sources */,
+				4BC42D1A261612010008C96A /* Provider.swift in Sources */,
 				4B7E602025E9A4E4009684AE /* ImageProvider.swift in Sources */,
 				4B7E602425E9ADE1009684AE /* Typealias.swift in Sources */,
 				4B7E602625E9AE41009684AE /* GameProvider.swift in Sources */,

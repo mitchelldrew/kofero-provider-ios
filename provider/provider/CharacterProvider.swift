@@ -8,25 +8,18 @@
 import Foundation
 import presenter
 
-open class CharacterProvider: ICharacterProvider {
-    
+/*
+open class CharacterProvider: Provider, ICharacterProvider {
     private var listeners = [ICharacterProviderListener]()
     private var characters = [ModelCharacter]()
-    private let restManager:IRestManager
-    private let fileManager:IFileManager
     private let mapper:ICharacterMapper
     private var requests = [[KotlinInt]]()
     private var isDiskPulled = false
-    private let url:URL
-    private let encoder:IEncoder
     private let JSON_FILENAME = "chars.json"
     
-    public init(restManager:IRestManager, fileManager:IFileManager, serializer:ICharacterMapper, userDefaults:IUserDefaults, charUrl:URL, encoder:IEncoder){
-        self.restManager = restManager
-        self.fileManager = fileManager
-        self.mapper = serializer
-        self.url = charUrl
-        self.encoder = encoder
+    public init(restManager:IRestManager, fileManager:IFileManager, mapper:ICharacterMapper, userDefaults:IUserDefaults, charUrl:URL, encoder:IEncoder){
+        self.mapper = mapper
+        
     }
     
     public func get(ids: [KotlinInt]) {
@@ -127,3 +120,4 @@ open class CharacterProvider: ICharacterProvider {
     }
     
 }
+*/

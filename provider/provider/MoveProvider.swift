@@ -8,18 +8,19 @@
 import Foundation
 import presenter
 
+/*
 open class MoveProvider: IMoveProvider {
     private var listeners = [IMoveProviderListener]()
     private var moves = [ModelMove]()
     private let fileManager:IFileManager
     private let restManager:IRestManager
-    private let serializer: MoveSerializer
+    private let mapper: IMoveMapper
     private let moveUrl:URL
     
-    public init(fileManager:IFileManager, restManager:IRestManager, serializer: MoveSerializer, moveUrl:URL){
+    public init(fileManager:IFileManager, restManager:IRestManager, mapper: IMoveMapper, moveUrl:URL){
         self.fileManager = fileManager
         self.restManager = restManager
-        self.serializer = serializer
+        self.mapper = mapper
         self.moveUrl = moveUrl
     }
     
@@ -27,13 +28,19 @@ open class MoveProvider: IMoveProvider {
         listeners.append(moveListener)
     }
     
-    private func informListeners(id:Int32, move:ModelMove){
+    private func informListeners(ids:[KotlinInt], move:[ModelMove]){
         for listener in listeners {
-            listener.onReceive(ids: <#T##[KotlinInt]#>, moves: <#T##[ModelMove]#>)
+            listener.onReceive(ids: ids, moves: move)
         }
     }
     
-    public func get(id: Int32) {
+    private func informListenersError(ids:[KotlinInt], error:KotlinException){
+        for listener in listeners {
+            listener.onError(ids: ids, error: error)
+        }
+    }
+    
+    public func get(ids: [KotlinInt]) {
         
     }
     
@@ -43,3 +50,4 @@ open class MoveProvider: IMoveProvider {
     
     
 }
+*/

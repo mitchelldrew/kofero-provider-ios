@@ -7,31 +7,21 @@
 
 import Foundation
 import presenter
+/*
 
-open class GameProvider: IGameProvider {
+open class GameProvider: Provider<[ModelGame]>, IGameProvider {
     private var listeners = [IGameProviderListener]()
     private var games = [ModelGame]()
     private var lastGet:Int64 = 0
-    private let mapper:IGameMapper
-    private let restManager:IRestManager
-    private let fileManager:IFileManager
-    private let gamesUrl:URL
     private var requests = [[KotlinInt]]()
     private var isDiskPulled = false
-    private let userDefaults: IUserDefaults
-    private let encoder:IEncoder
     
     private let JSON_FILENAME = "games.json"
     private let PULL_TIMER_MILLIS = 100000
     private let PULL_TIMER_KEY = "pulltimer"
     
-    public init(restManager:IRestManager, fileManager:IFileManager, mapper:IGameMapper, userDefaults:IUserDefaults, gamesUrl:URL, encoder:IEncoder){
-        self.restManager = restManager
-        self.fileManager = fileManager
-        self.gamesUrl = gamesUrl
-        self.mapper = mapper
-        self.userDefaults = userDefaults
-        self.encoder = encoder
+    public init(restManager:IRestManager, fileManager:IFileManager, mapper:DataMapper<[ModelGame]>, userDefaults:IUserDefaults, gamesUrl:URL, encoder:IEncoder){
+        super.init(restManager: restManager, fileManager: fileManager, userDefaults: userDefaults, encoder: encoder, url: gamesUrl, mapper: mapper)
     }
     
     public func get(ids: [KotlinInt]) {
@@ -47,24 +37,8 @@ open class GameProvider: IGameProvider {
         }
     }
     
-    private func getRestClosure(ids: [KotlinInt]) -> RestClosure {
-        return {[self] data, response, error in
-            if(isResponseGood(data:data, response:response, error:error)){
-                do{ addGames(newGames: try mapper.map(data: data!)) }
-                catch { informListenersError(ids: ids, error: KotlinException(message: error.localizedDescription)) }
-            }
-            else{
-                informListenersError(ids: ids, error: KotlinException(message: "error:\(error.debugDescription), response: \(response.debugDescription)"))
-            }
-        }
-    }
-    
-    private func isResponseGood(data:Data?, response:URLResponse?, error:Error?) -> Bool {
-        return data != nil && (response as! HTTPURLResponse).statusCode == 200 && error == nil
-    }
-    
     private func createRequest(ids: [KotlinInt]) -> URLRequest {
-        var ret = URLRequest(url: gamesUrl)
+        var ret = URLRequest(url: url)
         var ids32 = [Int32]()
         for id in ids{ ids32.append(id.int32Value) }
         do{
@@ -73,6 +47,7 @@ open class GameProvider: IGameProvider {
         catch {
             informListenersError(ids: ids, error: KotlinException(message: "request body encoding failed"))
         }
+        return ret
     }
     
     private func addGames(newGames:[ModelGame]){
@@ -138,3 +113,4 @@ open class GameProvider: IGameProvider {
         for listener in listeners { listener.onReceive(ids: ids, games: games) }
     }
 }
+*/
