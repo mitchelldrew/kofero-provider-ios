@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4B78BFD225FC5E9A0015BFD7 /* MoveSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B78BFD125FC5E9A0015BFD7 /* MoveSerializer.swift */; };
+		4B78BFD225FC5E9A0015BFD7 /* MoveMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B78BFD125FC5E9A0015BFD7 /* MoveMapper.swift */; };
 		4B7E601125E9A28D009684AE /* provider.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B7E600F25E9A28D009684AE /* provider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4B7E601C25E9A497009684AE /* presenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7E601A25E9A387009684AE /* presenter.framework */; platformFilter = ios; };
 		4B7E602025E9A4E4009684AE /* ImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E601F25E9A4E4009684AE /* ImageProvider.swift */; };
@@ -20,11 +20,11 @@
 		4B9F8DBF25F2AC01007F330C /* Pods_provider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BE1F54D244B84048D74B04B /* Pods_provider.framework */; };
 		4B9F8EC625F956F0007F330C /* CharacterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F8EC525F956F0007F330C /* CharacterProvider.swift */; };
 		4B9F8EC925F956FC007F330C /* MoveProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F8EC825F956FC007F330C /* MoveProvider.swift */; };
-		4B9F8ECC25F991C2007F330C /* CharacterSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F8ECB25F991C2007F330C /* CharacterSerializer.swift */; };
+		4B9F8ECC25F991C2007F330C /* CharacterMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F8ECB25F991C2007F330C /* CharacterMapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4B78BFD125FC5E9A0015BFD7 /* MoveSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveSerializer.swift; sourceTree = "<group>"; };
+		4B78BFD125FC5E9A0015BFD7 /* MoveMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveMapper.swift; sourceTree = "<group>"; };
 		4B7E600C25E9A28D009684AE /* provider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = provider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B7E600F25E9A28D009684AE /* provider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = provider.h; sourceTree = "<group>"; };
 		4B7E601025E9A28D009684AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -38,7 +38,7 @@
 		4B9F8DB525EC5343007F330C /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		4B9F8EC525F956F0007F330C /* CharacterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterProvider.swift; sourceTree = "<group>"; };
 		4B9F8EC825F956FC007F330C /* MoveProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveProvider.swift; sourceTree = "<group>"; };
-		4B9F8ECB25F991C2007F330C /* CharacterSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSerializer.swift; sourceTree = "<group>"; };
+		4B9F8ECB25F991C2007F330C /* CharacterMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterMapper.swift; sourceTree = "<group>"; };
 		6BE1F54D244B84048D74B04B /* Pods_provider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_provider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C50E7745291AF43C5A2ED528 /* Pods-provider.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-provider.debug.xcconfig"; path = "Target Support Files/Pods-provider/Pods-provider.debug.xcconfig"; sourceTree = "<group>"; };
 		F95E9E2B149EDFE776ED29D9 /* Pods-provider.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-provider.release.xcconfig"; path = "Target Support Files/Pods-provider/Pods-provider.release.xcconfig"; sourceTree = "<group>"; };
@@ -94,8 +94,8 @@
 				4B7E602725E9D458009684AE /* IMapper.swift */,
 				4B7E602925E9D593009684AE /* DataMapper.swift */,
 				4B7E602C25EAEAA3009684AE /* GameMapper.swift */,
-				4B9F8ECB25F991C2007F330C /* CharacterSerializer.swift */,
-				4B78BFD125FC5E9A0015BFD7 /* MoveSerializer.swift */,
+				4B9F8ECB25F991C2007F330C /* CharacterMapper.swift */,
+				4B78BFD125FC5E9A0015BFD7 /* MoveMapper.swift */,
 			);
 			path = json;
 			sourceTree = "<group>";
@@ -242,9 +242,9 @@
 				4B7E602425E9ADE1009684AE /* Typealias.swift in Sources */,
 				4B7E602625E9AE41009684AE /* GameProvider.swift in Sources */,
 				4B7E602A25E9D593009684AE /* DataMapper.swift in Sources */,
-				4B78BFD225FC5E9A0015BFD7 /* MoveSerializer.swift in Sources */,
+				4B78BFD225FC5E9A0015BFD7 /* MoveMapper.swift in Sources */,
 				4B9F8DB625EC5343007F330C /* Extension.swift in Sources */,
-				4B9F8ECC25F991C2007F330C /* CharacterSerializer.swift in Sources */,
+				4B9F8ECC25F991C2007F330C /* CharacterMapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
