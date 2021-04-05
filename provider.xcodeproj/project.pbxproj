@@ -80,29 +80,15 @@
 		4B7E600E25E9A28D009684AE /* provider */ = {
 			isa = PBXGroup;
 			children = (
+				4BC42D30261BAE3C0008C96A /* mapper */,
+				4BC42D2F261BAE370008C96A /* encoder */,
 				4B9F8EC425F956D3007F330C /* provider */,
-				4B7E602B25E9D795009684AE /* json */,
 				4B7E600F25E9A28D009684AE /* provider.h */,
 				4B7E601025E9A28D009684AE /* Info.plist */,
 				4B7E602325E9ADE1009684AE /* Typealias.swift */,
 				4B9F8DB525EC5343007F330C /* Extension.swift */,
 			);
 			path = provider;
-			sourceTree = "<group>";
-		};
-		4B7E602B25E9D795009684AE /* json */ = {
-			isa = PBXGroup;
-			children = (
-				4B7E602725E9D458009684AE /* IMapper.swift */,
-				4B7E602925E9D593009684AE /* IDataMapper.swift */,
-				4B7E602C25EAEAA3009684AE /* GameMapper.swift */,
-				4B9F8ECB25F991C2007F330C /* CharacterMapper.swift */,
-				4B78BFD125FC5E9A0015BFD7 /* MoveMapper.swift */,
-				4BC42D1C261669B70008C96A /* IDataEncoder.swift */,
-				4BC42D1F2616720A0008C96A /* IEncoder.swift */,
-				4BC42D2C261B9C390008C96A /* JsonDataEncoder.swift */,
-			);
-			path = json;
 			sourceTree = "<group>";
 		};
 		4B9F8EC425F956D3007F330C /* provider */ = {
@@ -112,6 +98,28 @@
 				4BC42D19261612010008C96A /* Provider.swift */,
 			);
 			path = provider;
+			sourceTree = "<group>";
+		};
+		4BC42D2F261BAE370008C96A /* encoder */ = {
+			isa = PBXGroup;
+			children = (
+				4BC42D1C261669B70008C96A /* IDataEncoder.swift */,
+				4BC42D1F2616720A0008C96A /* IEncoder.swift */,
+				4BC42D2C261B9C390008C96A /* JsonDataEncoder.swift */,
+			);
+			path = encoder;
+			sourceTree = "<group>";
+		};
+		4BC42D30261BAE3C0008C96A /* mapper */ = {
+			isa = PBXGroup;
+			children = (
+				4B7E602725E9D458009684AE /* IMapper.swift */,
+				4B7E602925E9D593009684AE /* IDataMapper.swift */,
+				4B7E602C25EAEAA3009684AE /* GameMapper.swift */,
+				4B9F8ECB25F991C2007F330C /* CharacterMapper.swift */,
+				4B78BFD125FC5E9A0015BFD7 /* MoveMapper.swift */,
+			);
+			path = mapper;
 			sourceTree = "<group>";
 		};
 		5328F4BB79914B5631C49B3F /* Pods */ = {

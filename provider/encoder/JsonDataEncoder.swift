@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 open class JsonDataEncoder<I:Encodable>: IDataEncoder<I> {
     private let encoder = JSONEncoder()
     
