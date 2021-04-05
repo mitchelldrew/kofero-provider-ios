@@ -15,9 +15,9 @@ public protocol IGameMapper {
 }
 
 public class GameMapper: IDataMapper<[ModelGame]>, IGameMapper {
-    private let encoder:DataEncoder<[JSON]>
+    private let encoder:IDataEncoder<[JSON]>
     
-    public init(encoder:DataEncoder<[JSON]>) {
+    public init(encoder:IDataEncoder<[JSON]>) {
         self.encoder = encoder
         super.init()
     }

@@ -76,4 +76,13 @@ extension ModelCharacter{
     }
 }
 
+extension Provider{
+    func get(ids:[Int32]){
+        var kIds = [KotlinInt]()
+        for int in ids{
+            kIds.append(int.toKotlinInt())
+        }
+        get(ids: kIds)
+    }
+}
 

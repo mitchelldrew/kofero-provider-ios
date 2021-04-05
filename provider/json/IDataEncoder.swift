@@ -7,11 +7,11 @@
 
 import Foundation
 
-open class DataEncoder<I:Encodable>: IEncoder {
+
+open class IDataEncoder<I:Encodable>: IEncoder {
     public typealias O = Data
-    let encoder = JSONEncoder()
     
     public func encode(_ value: I) throws -> Data {
-        return try encoder.encode(value)
+        fatalError("override me!")
     }
 }

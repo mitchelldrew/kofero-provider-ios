@@ -13,7 +13,7 @@ open class Provider<O:ModelModelObj>: IProvider {
     private let restManager: IRestManager
     private let fileManager: IFileManager
     private let userDefaults: IUserDefaults
-    private let encoder:DataEncoder<[Int32]>
+    private let encoder:IDataEncoder<[Int32]>
     private var elements = [O]()
     private let url:URL
     private let mapper:IDataMapper<[O]>
@@ -21,7 +21,7 @@ open class Provider<O:ModelModelObj>: IProvider {
     private var requests = [[KotlinInt]]()
     private var jsonFilename: String
     
-    public init(restManager: IRestManager, fileManager: IFileManager, userDefaults: IUserDefaults, encoder: DataEncoder<[Int32]>, url:URL, mapper:IDataMapper<[O]>, jsonFilename:String){
+    public init(restManager: IRestManager, fileManager: IFileManager, userDefaults: IUserDefaults, encoder: IDataEncoder<[Int32]>, url:URL, mapper:IDataMapper<[O]>, jsonFilename:String){
         self.fileManager = fileManager
         self.restManager = restManager
         self.userDefaults = userDefaults
@@ -128,15 +128,5 @@ open class Provider<O:ModelModelObj>: IProvider {
         for listener in listeners {
             listener.onError(ids: ids, error: error)
         }
-    }
-}
-
-extension Provider{
-    func get(ids:[Int32]){
-        var kIds = [KotlinInt]()
-        for int in ids{
-            kIds.append(KotlinInt(value: int))
-        }
-        get(ids: kIds)
     }
 }
