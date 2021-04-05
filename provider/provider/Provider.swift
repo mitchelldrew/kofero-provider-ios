@@ -43,7 +43,6 @@ open class Provider<O:ModelModelObj>: IProvider {
     }
     
     public func get(ids: [KotlinInt]) {
-        print("hello! \(O.Type.self)")
             if(!isDiskPulled){ pullFromDisk(ids: ids) }
             else{
                 if(isSatisfiable(request: ids)){ informListeners(ids: ids, elements: retrieve(ids: ids)) }
@@ -95,7 +94,7 @@ open class Provider<O:ModelModelObj>: IProvider {
         return ret
     }
     
-    private func pullFromDisk(ids: [KotlinInt]){
+    private func pullFromDisk(ids: [KotlinInt]) {
         isDiskPulled = true
         requests.append(ids)
         if let json = fileManager.contents(atPath: fileManager.currentDirectoryPath + jsonFilename) {
@@ -118,13 +117,13 @@ open class Provider<O:ModelModelObj>: IProvider {
         listeners.removeAll{compListener in return listener === compListener}
     }
     
-    private func informListeners(ids: [KotlinInt], elements: [ModelModelObj]){
+    private func informListeners(ids: [KotlinInt], elements: [ModelModelObj]) {
         for listener in listeners{
             listener.onReceive(ids: ids, elements: elements)
         }
     }
     
-    private func informListenersError(ids: [KotlinInt], error: KotlinException){
+    private func informListenersError(ids: [KotlinInt], error: KotlinException) {
         for listener in listeners {
             listener.onError(ids: ids, error: error)
         }
