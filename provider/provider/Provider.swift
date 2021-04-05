@@ -21,11 +21,11 @@ open class Provider<O:ModelModelObj>: IProvider {
     private var requests = [[KotlinInt]]()
     private var jsonFilename: String
     
-    public init(restManager: IRestManager, fileManager: IFileManager, userDefaults: IUserDefaults, encoder: IDataEncoder<[Int32]>, url:URL, mapper:IDataMapper<[O]>, jsonFilename:String){
-        self.fileManager = fileManager
-        self.restManager = restManager
-        self.userDefaults = userDefaults
-        self.encoder = encoder
+    public init(core:ProviderCore, url:URL, mapper:IDataMapper<[O]>, jsonFilename:String){
+        self.fileManager = core.fileManager
+        self.restManager = core.restManager
+        self.userDefaults = core.userDefaults
+        self.encoder = core.requestEncoder
         self.url = url
         self.mapper = mapper
         self.jsonFilename = jsonFilename
