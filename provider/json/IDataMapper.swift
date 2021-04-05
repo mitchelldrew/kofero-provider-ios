@@ -8,7 +8,7 @@
 import Foundation
 import presenter
 
-open class DataMapper<O>: IMapper {
+open class IDataMapper<O>: IMapper {
     typealias I = Data
     
     public func map(data: Data) throws -> O {

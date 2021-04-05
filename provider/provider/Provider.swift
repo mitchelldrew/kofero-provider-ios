@@ -9,19 +9,19 @@ import Foundation
 import presenter
 
 open class Provider<O:ModelModelObj>: IProvider {
-    internal var listeners = [IProviderListener]()
-    internal let restManager: IRestManager
-    internal let fileManager: IFileManager
-    internal let userDefaults: IUserDefaults
-    internal let encoder:IEncoder
-    internal var elements = [O]()
-    internal let url:URL
-    internal let mapper:DataMapper<[O]>
-    internal var isDiskPulled = false
-    internal var requests = [[KotlinInt]]()
-    internal var jsonFilename: String
+    private var listeners = [IProviderListener]()
+    private let restManager: IRestManager
+    private let fileManager: IFileManager
+    private let userDefaults: IUserDefaults
+    private let encoder:DataEncoder<[Int32]>
+    private var elements = [O]()
+    private let url:URL
+    private let mapper:IDataMapper<[O]>
+    private var isDiskPulled = false
+    private var requests = [[KotlinInt]]()
+    private var jsonFilename: String
     
-    init(restManager: IRestManager, fileManager: IFileManager, userDefaults: IUserDefaults, encoder: IEncoder, url:URL, mapper:DataMapper<[O]>, jsonFilename:String){
+    public init(restManager: IRestManager, fileManager: IFileManager, userDefaults: IUserDefaults, encoder: DataEncoder<[Int32]>, url:URL, mapper:IDataMapper<[O]>, jsonFilename:String){
         self.fileManager = fileManager
         self.restManager = restManager
         self.userDefaults = userDefaults
@@ -31,7 +31,7 @@ open class Provider<O:ModelModelObj>: IProvider {
         self.jsonFilename = jsonFilename
     }
     
-    internal func isResponseGood(data:Data?, response:URLResponse?, error:Error?) -> Bool {
+    private func isResponseGood(data:Data?, response:URLResponse?, error:Error?) -> Bool {
         return data != nil && (response as! HTTPURLResponse).statusCode == 200 && error == nil
     }
     
@@ -43,9 +43,8 @@ open class Provider<O:ModelModelObj>: IProvider {
     }
     
     public func get(ids: [KotlinInt]) {
-            if(!isDiskPulled){
-                pullFromDisk(ids: ids)
-            }
+        print("hello! \(O.Type.self)")
+            if(!isDiskPulled){ pullFromDisk(ids: ids) }
             else{
                 if(isSatisfiable(request: ids)){ informListeners(ids: ids, elements: retrieve(ids: ids)) }
                 else{
@@ -129,5 +128,15 @@ open class Provider<O:ModelModelObj>: IProvider {
         for listener in listeners {
             listener.onError(ids: ids, error: error)
         }
+    }
+}
+
+extension Provider{
+    func get(ids:[Int32]){
+        var kIds = [KotlinInt]()
+        for int in ids{
+            kIds.append(KotlinInt(value: int))
+        }
+        get(ids: kIds)
     }
 }

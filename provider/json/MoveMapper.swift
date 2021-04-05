@@ -14,10 +14,10 @@ public protocol IMoveMapper{
     func map(data:[ModelMove]) throws -> Data
 }
 
-public class MoveMapper:DataMapper<[ModelMove]>, IMoveMapper{
-    private let encoder:IEncoder
+public class MoveMapper:IDataMapper<[ModelMove]>, IMoveMapper{
+    private let encoder:DataEncoder<[JSON]>
     
-    public init(encoder: IEncoder) {
+    public init(encoder:DataEncoder<[JSON]>) {
         self.encoder = encoder
     }
     

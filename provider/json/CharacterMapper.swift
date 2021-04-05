@@ -14,10 +14,10 @@ public protocol ICharacterMapper{
     func map(data:[ModelCharacter]) throws -> Data
 }
 
-public class CharacterMapper:DataMapper<[ModelCharacter]>,ICharacterMapper{
-    private let encoder:IEncoder
+public class CharacterMapper:IDataMapper<[ModelCharacter]>,ICharacterMapper{
+    private let encoder:DataEncoder<[JSON]>
     
-    public init(encoder: IEncoder){
+    public init(encoder:DataEncoder<[JSON]>){
         self.encoder = encoder
     }
     

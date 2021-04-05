@@ -77,13 +77,3 @@ extension ModelCharacter{
 }
 
 
-
-public protocol IEncoder{
-    func encode(_ value: Encodable) throws -> Data
-}
-
-extension JSONEncoder: IEncoder {
-    public func encode(_ value: Encodable) throws -> Data {
-        return try encode(value)
-    }
-}

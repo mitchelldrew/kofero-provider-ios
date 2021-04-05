@@ -14,10 +14,10 @@ public protocol IGameMapper {
     func map(data:[ModelGame]) throws -> Data
 }
 
-public class GameMapper: DataMapper<[ModelGame]>, IGameMapper {
-    private let encoder:IEncoder
+public class GameMapper: IDataMapper<[ModelGame]>, IGameMapper {
+    private let encoder:DataEncoder<[JSON]>
     
-    public init(encoder:IEncoder) {
+    public init(encoder:DataEncoder<[JSON]>) {
         self.encoder = encoder
         super.init()
     }
