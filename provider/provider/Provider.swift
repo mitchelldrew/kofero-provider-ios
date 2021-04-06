@@ -8,7 +8,7 @@
 import Foundation
 import presenter
 
-open class Provider<O:ModelModelObj>: IProvider {
+open class Provider<O:ModelObj>: IProvider {
     private var listeners = [IProviderListener]()
     private let restManager: IRestManager
     private let fileManager: IFileManager
@@ -43,14 +43,14 @@ open class Provider<O:ModelModelObj>: IProvider {
     }
     
     public func get(ids: [KotlinInt]) {
-            if(!isDiskPulled){ pullFromDisk(ids: ids) }
+        if(!isDiskPulled){ pullFromDisk(ids: ids) }
+        else{
+            if(isSatisfiable(request: ids)){ informListeners(ids: ids, elements: retrieve(ids: ids)) }
             else{
-                if(isSatisfiable(request: ids)){ informListeners(ids: ids, elements: retrieve(ids: ids)) }
-                else{
-                    requests.append(ids)
-                    restManager.dataTask(with: createRequest(ids: ids), completionHandler: getRestClosure(ids: ids)).resume()
-                }
+                requests.append(ids)
+                restManager.dataTask(with: createRequest(ids: ids), completionHandler: getRestClosure(ids: ids)).resume()
             }
+        }
     }
     
     private func add(new:[O]){
@@ -124,7 +124,7 @@ open class Provider<O:ModelModelObj>: IProvider {
         listeners.removeAll{compListener in return listener === compListener}
     }
     
-    private func informListeners(ids: [KotlinInt], elements: [ModelModelObj]) {
+    private func informListeners(ids: [KotlinInt], elements: [O]) {
         for listener in listeners{
             listener.onReceive(ids: ids, elements: elements)
         }
