@@ -97,6 +97,13 @@ open class Provider<O:ModelModelObj>: IProvider {
     private func pullFromDisk(ids: [KotlinInt]) {
         isDiskPulled = true
         requests.append(ids)
+        if let path = Bundle.main.path(forResource: jsonFilename, ofType: "json") {
+            do {
+                elements = try mapper.map(data: Data(contentsOf: URL(fileURLWithPath: path), options: .alwaysMapped))
+            } catch let error { informListenersError(ids: ids, error: KotlinException(error: error)) }
+        } else {
+            informListenersError(ids: ids, error: KotlinException(message: "invalid json filename: \(jsonFilename)"))
+        }
         if let json = fileManager.contents(atPath: fileManager.currentDirectoryPath + jsonFilename) {
             do{
                 elements = try mapper.map(data: json)

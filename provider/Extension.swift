@@ -36,6 +36,12 @@ public protocol IRestManager {
   func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask
 }
 
+extension KotlinException {
+    convenience init(error:Error){
+        self.init(message: error.localizedDescription)
+    }
+}
+
 extension URLSession : IRestManager{}
 extension URLSessionDataTask : IRestTask{}
 

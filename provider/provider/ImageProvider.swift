@@ -10,12 +10,12 @@ import presenter
 
 open class ImageProvider: IImageProvider {
     private var listeners = [IImageProviderListener]()
-    private let restManager:IRestManager
-    private let fileManager:IFileManager
+    public let restManager:IRestManager
+    public let fileManager:IFileManager
     
-    public init(restManager:IRestManager, fileManager:IFileManager){
-        self.restManager = restManager
-        self.fileManager = fileManager
+    public init(core:ProviderCore){
+        self.restManager = core.restManager
+        self.fileManager = core.fileManager
     }
     
     private func informListenersNon200(url:String, response:HTTPURLResponse){
@@ -46,11 +46,18 @@ open class ImageProvider: IImageProvider {
         }
     }
     
+    private func saveToDisk(data: Data, url: String){
+        
+    }
+    
     private func getRestClosure(url:String) -> RestClosure {
         return {[self] data,response,error in
             if let uResponse = response as? HTTPURLResponse {
                 if let uData = data {
-                    if(uResponse.statusCode == 200) {informListeners(data: uData, url: url)}
+                    if(uResponse.statusCode == 200) {
+                        informListeners(data: uData, url: url)
+                        saveToDisk(data: uData, url: url)
+                    }
                     else { informListenersNon200(url: url, response: uResponse)}
                 }
                 else{informListenersUnexpectedError(url: url)}
