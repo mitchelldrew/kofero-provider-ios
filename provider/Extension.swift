@@ -47,8 +47,9 @@ extension URLSessionDataTask : IRestTask{}
 
 public protocol IFileManager {
     var currentDirectoryPath: String {get}
-    func fileExists(atPath:String) -> Bool
     func contents(atPath:String) -> Data?
+    func createFile(atPath: String, contents: Data?, attributes: [FileAttributeKey : Any]?) -> Bool
+    func removeItem(atPath: String) throws
 }
 
 extension FileManager: IFileManager{}

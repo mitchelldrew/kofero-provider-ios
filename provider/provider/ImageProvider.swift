@@ -37,6 +37,7 @@ open class ImageProvider: IImageProvider {
     }
     
     private func getFromDisk(url:String){
+        /*
         DispatchQueue.global().async { [self] in
             if(fileManager.fileExists(atPath: url)){
                 if let uData = fileManager.contents(atPath: url){
@@ -44,6 +45,7 @@ open class ImageProvider: IImageProvider {
                 }
             }
         }
+ */
     }
     
     private func saveToDisk(data: Data, url: String){

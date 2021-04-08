@@ -9,17 +9,18 @@ import Foundation
 import presenter
 
 open class Provider<O:ModelObj>: IProvider {
-    private var listeners = [IProviderListener]()
     private let restManager: IRestManager
     private let fileManager: IFileManager
     private let userDefaults: IUserDefaults
     private let encoder:IDataEncoder<[Int32]>
-    private var elements = [O]()
     private let url:URL
     private let mapper:IDataMapper<[O]>
+    private let jsonFilename: String
+    
     private var isDiskPulled = false
+    private var listeners = [IProviderListener]()
     private var requests = [[KotlinInt]]()
-    private var jsonFilename: String
+    private var elements = [O]()
     
     public init(core:ProviderCore, url:URL, mapper:IDataMapper<[O]>, jsonFilename:String){
         self.fileManager = core.fileManager
@@ -58,7 +59,28 @@ open class Provider<O:ModelObj>: IProvider {
             elements.removeAll(where: {existingElement in return element.id == existingElement.id})
             elements.append(element)
         }
+        saveToDisk()
+        for request in requests {
+            if(isSatisfiable(request: request)){
+                informListeners(ids: request, elements: retrieve(ids: request))
+                requests.removeAll{existingRequest in return existingRequest == request}
+            }
+        }
     }
+    
+    
+    private func saveToDisk(){
+        do{
+            try fileManager.removeItem(atPath: fileManager.currentDirectoryPath + jsonFilename)
+            if(try !fileManager.createFile(atPath: fileManager.currentDirectoryPath + jsonFilename, contents: mapper.map(data: elements), attributes: nil)){
+                informListenersError(ids: [], error: KotlinException(message: "failed to create file"))
+             }
+        }
+        catch {
+            informListenersError(ids: [], error: KotlinException(error: error))
+        }
+    }
+    
     
     private func getRestClosure(ids: [KotlinInt]) -> RestClosure {
         return {[self] data, response, error in
@@ -96,28 +118,41 @@ open class Provider<O:ModelObj>: IProvider {
     
     private func pullFromDisk(ids: [KotlinInt]) {
         isDiskPulled = true
-        requests.append(ids)
-        if let path = Bundle.main.path(forResource: jsonFilename, ofType: "json") {
-            do {
-                elements = try mapper.map(data: Data(contentsOf: URL(fileURLWithPath: path), options: .alwaysMapped))
-            } catch let error { informListenersError(ids: ids, error: KotlinException(error: error)) }
-        } else {
-            informListenersError(ids: ids, error: KotlinException(message: "invalid json filename: \(jsonFilename)"))
-        }
         if let json = fileManager.contents(atPath: fileManager.currentDirectoryPath + jsonFilename) {
-            do{
+            do {
                 elements = try mapper.map(data: json)
             }
             catch {
                 informListenersError(ids: ids, error: KotlinException(message: "serialization error"))
             }
         }
-        restManager.dataTask(with: createRequest(ids: ids), completionHandler: getRestClosure(ids: ids)).resume()
+        else {
+            pullFromJson(ids:ids)
+        }
+        if(isSatisfiable(request: ids)){
+            informListeners(ids: ids, elements: retrieve(ids: ids))
+        }
+        else{
+            requests.append(ids)
+            restManager.dataTask(with: createRequest(ids: ids), completionHandler: getRestClosure(ids: ids)).resume()
+        }
+    }
+    
+    private func pullFromJson(ids:[KotlinInt]) {
+        if let path = Bundle.main.path(forResource: jsonFilename, ofType: "json") {
+            do {
+                elements = try mapper.map(data: Data(contentsOf: URL(fileURLWithPath: path), options: .alwaysMapped))
+                
+            } catch let error { informListenersError(ids: ids, error: KotlinException(error: error)) }
+        } else {
+            informListenersError(ids: ids, error: KotlinException(message: "invalid json filename: \(jsonFilename)"))
+        }
     }
     
     
     public func addListener(listener: IProviderListener) {
         listeners.append(listener)
+        print("add: \(listeners.count)")
     }
     
     public func removeListener(listener: IProviderListener) {
@@ -125,13 +160,14 @@ open class Provider<O:ModelObj>: IProvider {
     }
     
     private func informListeners(ids: [KotlinInt], elements: [O]) {
+        print("inform: \(listeners.count)")
         for listener in listeners{
             listener.onReceive(ids: ids, elements: elements)
         }
     }
     
     private func informListenersError(ids: [KotlinInt], error: KotlinException) {
-        for listener in listeners {
+        for listener in self.listeners {
             listener.onError(ids: ids, error: error)
         }
     }
