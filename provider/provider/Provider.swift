@@ -132,7 +132,7 @@ open class Provider<O:ModelObj>: IProvider {
             }
         }
         else {
-            pullFromJson(ids:ids)
+            pullFromBundledJson(ids:ids)
         }
         if(isSatisfiable(request: ids)){
             informListeners(ids: ids, elements: retrieve(ids: ids))
@@ -142,7 +142,7 @@ open class Provider<O:ModelObj>: IProvider {
         }
     }
     
-    private func pullFromJson(ids:[KotlinInt]) {
+    private func pullFromBundledJson(ids:[KotlinInt]) {
         if let path = Bundle.main.path(forResource: jsonFilename, ofType: "json") {
             do {
                 elements = try mapper.map(data: Data(contentsOf: URL(fileURLWithPath: path), options: .alwaysMapped))

@@ -9,12 +9,7 @@ import Foundation
 import presenter
 import SwiftyJSON
 
-public protocol ICharacterMapper{
-    func map(data:Data) throws -> [ModelCharacter]
-    func map(data:[ModelCharacter]) throws -> Data
-}
-
-public class CharacterMapper:IDataMapper<[ModelCharacter]>,ICharacterMapper{
+public class CharacterMapper:IDataMapper<[ModelCharacter]>{
     private let encoder:IDataEncoder<[JSON]>
     
     public init(encoder:IDataEncoder<[JSON]>){

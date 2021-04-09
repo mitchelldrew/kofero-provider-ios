@@ -9,12 +9,7 @@ import Foundation
 import presenter
 import SwiftyJSON
 
-public protocol IGameMapper {
-    func map(data:Data) throws -> [ModelGame]
-    func map(data:[ModelGame]) throws -> Data
-}
-
-public class GameMapper: IDataMapper<[ModelGame]>, IGameMapper {
+public class GameMapper: IDataMapper<[ModelGame]> {
     private let encoder:IDataEncoder<[JSON]>
     
     public init(encoder:IDataEncoder<[JSON]>) {

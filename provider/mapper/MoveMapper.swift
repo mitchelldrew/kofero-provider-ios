@@ -6,15 +6,10 @@
 //
 
 import Foundation
-import SwiftyJSON
 import presenter
+import SwiftyJSON
 
-public protocol IMoveMapper{
-    func map(data:Data) throws -> [ModelMove]
-    func map(data:[ModelMove]) throws -> Data
-}
-
-public class MoveMapper:IDataMapper<[ModelMove]>, IMoveMapper{
+public class MoveMapper:IDataMapper<[ModelMove]>{
     private let encoder:IDataEncoder<[JSON]>
     
     public init(encoder:IDataEncoder<[JSON]>) {
