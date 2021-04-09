@@ -19,7 +19,7 @@ open class Provider<O:ModelObj>: IProvider {
     
     private var isDiskPulled = false
     private var listeners = [IProviderListener]()
-    private var requests = [[KotlinInt]]()
+    private var requests = [[KotlinInt]:IRestTask]()
     private var elements = [O]()
     
     public init(core:ProviderCore, url:URL, mapper:IDataMapper<[O]>, jsonFilename:String){
@@ -48,10 +48,15 @@ open class Provider<O:ModelObj>: IProvider {
         else{
             if(isSatisfiable(request: ids)){ informListeners(ids: ids, elements: retrieve(ids: ids)) }
             else{
-                requests.append(ids)
-                restManager.dataTask(with: createRequest(ids: ids), completionHandler: getRestClosure(ids: ids)).resume()
+                send(ids: ids)
             }
         }
+    }
+    
+    private func send(ids: [KotlinInt]){
+        let task = restManager.dataTask(with: createRequest(ids: ids), completionHandler: getRestClosure(ids: ids))
+        requests.updateValue(task, forKey: ids)
+        task.resume()
     }
     
     private func add(new:[O]){
@@ -60,10 +65,10 @@ open class Provider<O:ModelObj>: IProvider {
             elements.append(element)
         }
         saveToDisk()
-        for request in requests {
+        for request in requests.keys {
             if(isSatisfiable(request: request)){
                 informListeners(ids: request, elements: retrieve(ids: request))
-                requests.removeAll{existingRequest in return existingRequest == request}
+                requests.removeValue(forKey: request)?.cancel()
             }
         }
     }
@@ -133,8 +138,7 @@ open class Provider<O:ModelObj>: IProvider {
             informListeners(ids: ids, elements: retrieve(ids: ids))
         }
         else{
-            requests.append(ids)
-            restManager.dataTask(with: createRequest(ids: ids), completionHandler: getRestClosure(ids: ids)).resume()
+            send(ids: ids)
         }
     }
     
@@ -152,15 +156,13 @@ open class Provider<O:ModelObj>: IProvider {
     
     public func addListener(listener: IProviderListener) {
         listeners.append(listener)
-        print("add: \(listeners.count)")
     }
     
     public func removeListener(listener: IProviderListener) {
-        listeners.removeAll{compListener in return listener === compListener}
+        listeners.removeAll{existingListener in return listener === existingListener}
     }
     
     private func informListeners(ids: [KotlinInt], elements: [O]) {
-        print("inform: \(listeners.count)")
         for listener in listeners{
             listener.onReceive(ids: ids, elements: elements)
         }

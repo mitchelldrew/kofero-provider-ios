@@ -14,13 +14,13 @@ extension Date {
     }
 }
 
-extension Int32{
+extension Int32 {
     func toKotlinInt() -> KotlinInt {
         return KotlinInt(value: self)
     }
 }
 
-public protocol IUserDefaults{
+public protocol IUserDefaults {
     func set(_:Int, forKey:String)
     func object(forKey:String) -> Any?
 }
