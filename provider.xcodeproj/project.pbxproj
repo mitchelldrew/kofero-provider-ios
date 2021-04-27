@@ -16,6 +16,7 @@
 		4B7E602A25E9D593009684AE /* IDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E602925E9D593009684AE /* IDataMapper.swift */; };
 		4B7E602D25EAEAA3009684AE /* GameMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7E602C25EAEAA3009684AE /* GameMapper.swift */; };
 		4B8A0C3D261BB523007006D6 /* ProviderCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8A0C3C261BB523007006D6 /* ProviderCore.swift */; };
+		4B91FB7F262E17D200A4A56A /* FavoritesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B91FB7E262E17D200A4A56A /* FavoritesProvider.swift */; };
 		4B9F8DB625EC5343007F330C /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F8DB525EC5343007F330C /* Extension.swift */; };
 		4B9F8DBF25F2AC01007F330C /* Pods_provider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BE1F54D244B84048D74B04B /* Pods_provider.framework */; };
 		4B9F8ECC25F991C2007F330C /* CharacterMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F8ECB25F991C2007F330C /* CharacterMapper.swift */; };
@@ -37,6 +38,7 @@
 		4B7E602925E9D593009684AE /* IDataMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDataMapper.swift; sourceTree = "<group>"; };
 		4B7E602C25EAEAA3009684AE /* GameMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMapper.swift; sourceTree = "<group>"; };
 		4B8A0C3C261BB523007006D6 /* ProviderCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderCore.swift; sourceTree = "<group>"; };
+		4B91FB7E262E17D200A4A56A /* FavoritesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesProvider.swift; sourceTree = "<group>"; };
 		4B9F8DB525EC5343007F330C /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		4B9F8ECB25F991C2007F330C /* CharacterMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterMapper.swift; sourceTree = "<group>"; };
 		4BC42D19261612010008C96A /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				4B7E601F25E9A4E4009684AE /* ImageProvider.swift */,
 				4BC42D19261612010008C96A /* Provider.swift */,
 				4B8A0C3C261BB523007006D6 /* ProviderCore.swift */,
+				4B91FB7E262E17D200A4A56A /* FavoritesProvider.swift */,
 			);
 			path = provider;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				4B7E602025E9A4E4009684AE /* ImageProvider.swift in Sources */,
 				4BC42D2D261B9C390008C96A /* JsonDataEncoder.swift in Sources */,
 				4B7E602425E9ADE1009684AE /* Typealias.swift in Sources */,
+				4B91FB7F262E17D200A4A56A /* FavoritesProvider.swift in Sources */,
 				4B7E602A25E9D593009684AE /* IDataMapper.swift in Sources */,
 				4B78BFD225FC5E9A0015BFD7 /* MoveMapper.swift in Sources */,
 				4B8A0C3D261BB523007006D6 /* ProviderCore.swift in Sources */,

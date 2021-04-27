@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import presenter
 
 open class IDataMapper<O>: IMapper {
     typealias I = Data

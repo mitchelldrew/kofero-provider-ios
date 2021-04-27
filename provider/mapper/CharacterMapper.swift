@@ -32,7 +32,7 @@ public class CharacterMapper:IDataMapper<[ModelCharacter]>{
             charJson["id"].int32 = char.id
             charJson["name"].string = char.name
             charJson["moveIds"].arrayObject = char.mvIds
-            charJson["health"].int32 = char.health
+            charJson["attributes"].dictionaryObject = char.attributes
             charJson["iconUrl"].string = char.iconUrl
             json.append(charJson)
         }
@@ -41,9 +41,21 @@ public class CharacterMapper:IDataMapper<[ModelCharacter]>{
     
     private func serialize(json: JSON) -> ModelCharacter {
         var moveIds = [KotlinInt]()
+        
         for element in json["moveIds"].arrayValue {
             moveIds.append(KotlinInt(int: element.int32Value))
         }
-        return ModelCharacter(id: json["id"].int32Value, name: json["name"].stringValue, health: json["health"].int32Value, moveIds: moveIds, iconUrl: json["iconUrl"].stringValue)
+        return ModelCharacter(id: json["id"].int32Value, name: json["name"].stringValue, attributes: transformDict(dict: json["attributes"].dictionaryValue), moveIds: moveIds, iconUrl: json["iconUrl"].stringValue)
+    }
+    
+    private func transformDict(dict:[String:JSON]) -> [String:String] {
+        var mDict = dict
+        var ret = [String:String]()
+        for key in dict.keys {
+            if let value = mDict.removeValue(forKey: key) {
+                ret.updateValue(value.stringValue, forKey: key)
+            }
+        }
+        return ret
     }
 }

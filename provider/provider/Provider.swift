@@ -13,9 +13,9 @@ open class Provider<O:ModelObj>: IProvider {
     private let fileManager: IFileManager
     private let userDefaults: IUserDefaults
     private let encoder:IDataEncoder<[Int32]>
-    private let url:URL
     private let mapper:IDataMapper<[O]>
     private let jsonFilename: String
+    private let url:URL
     
     private var isDiskPulled = false
     private var listeners = [IProviderListener]()
@@ -114,6 +114,7 @@ open class Provider<O:ModelObj>: IProvider {
     
     
     private func retrieve(ids: [KotlinInt]) -> [O] {
+        if(ids.isEmpty){ return elements }
         var ret = [O]()
         for id in ids {
             ret.append(elements.first(where: {element in return element.id == id.int32Value})!)
@@ -146,8 +147,8 @@ open class Provider<O:ModelObj>: IProvider {
         if let path = Bundle.main.path(forResource: jsonFilename, ofType: "json") {
             do {
                 elements = try mapper.map(data: Data(contentsOf: URL(fileURLWithPath: path), options: .alwaysMapped))
-                
-            } catch let error { informListenersError(ids: ids, error: KotlinException(error: error)) }
+            }
+            catch let error { informListenersError(ids: ids, error: KotlinException(error: error)) }
         } else {
             informListenersError(ids: ids, error: KotlinException(message: "invalid json filename: \(jsonFilename)"))
         }
