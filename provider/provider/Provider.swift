@@ -38,7 +38,7 @@ open class Provider<O:ModelObj>: IProvider {
     
     private func isSatisfiable(request: [KotlinInt]) -> Bool {
         for id in request {
-            if(!elements.contains(where: {element in return element.id == id.int32Value})){ return false }
+            if(!elements.contains(where: {element in return element.uid == id.int32Value})){ return false }
         }
         return true
     }
@@ -61,7 +61,7 @@ open class Provider<O:ModelObj>: IProvider {
     
     private func add(new:[O]){
         for element in new {
-            elements.removeAll(where: {existingElement in return element.id == existingElement.id})
+            elements.removeAll(where: {existingElement in return element.uid == existingElement.uid})
             elements.append(element)
         }
         saveToDisk()
@@ -117,7 +117,7 @@ open class Provider<O:ModelObj>: IProvider {
         if(ids.isEmpty){ return elements }
         var ret = [O]()
         for id in ids {
-            ret.append(elements.first(where: {element in return element.id == id.int32Value})!)
+            ret.append(elements.first(where: {element in return element.uid == id.int32Value})!)
         }
         return ret
     }

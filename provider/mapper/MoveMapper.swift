@@ -20,7 +20,7 @@ public class MoveMapper:IDataMapper<[ModelMove]>{
         var json = [JSON]()
         for move in data {
             var moveJson = JSON()
-            moveJson["id"].int32 = move.id
+            moveJson["uid"].int32 = move.uid
             moveJson["name"].string = move.name
             moveJson["startup"].stringValue = move.startup
             moveJson["active"].stringValue = move.active
@@ -43,6 +43,6 @@ public class MoveMapper:IDataMapper<[ModelMove]>{
     }
     
     private func serialize(json: JSON) -> ModelMove {
-        return ModelMove(id: json["id"].int32Value, name: json["name"].stringValue, startup: json["startup"].stringValue, active: json["active"].stringValue, recovery: json["recovery"].stringValue, hitAdv: json["hitAdv"].stringValue, blockAdv: json["blockAdv"].stringValue, notes: json["notes"].stringValue)
+        return ModelMove(uid: json["uid"].int32Value, name: json["name"].stringValue, startup: json["startup"].stringValue, active: json["active"].stringValue, recovery: json["recovery"].stringValue, hitAdv: json["hitAdv"].stringValue, blockAdv: json["blockAdv"].stringValue, notes: json["notes"].stringValue)
     }
 }

@@ -29,7 +29,7 @@ public class CharacterMapper:IDataMapper<[ModelCharacter]>{
         var json = [JSON]()
         for char in data {
             var charJson = JSON()
-            charJson["id"].int32 = char.id
+            charJson["uid"].int32 = char.uid
             charJson["name"].string = char.name
             charJson["moveIds"].arrayObject = char.mvIds
             charJson["attributes"].dictionaryObject = char.attributes
@@ -45,7 +45,7 @@ public class CharacterMapper:IDataMapper<[ModelCharacter]>{
         for element in json["moveIds"].arrayValue {
             moveIds.append(KotlinInt(int: element.int32Value))
         }
-        return ModelCharacter(id: json["id"].int32Value, name: json["name"].stringValue, attributes: transformDict(dict: json["attributes"].dictionaryValue), moveIds: moveIds, iconUrl: json["iconUrl"].stringValue)
+        return ModelCharacter(uid: json["uid"].int32Value, name: json["name"].stringValue, attributes: transformDict(dict: json["attributes"].dictionaryValue), moveIds: moveIds, iconUrl: json["iconUrl"].stringValue)
     }
     
     private func transformDict(dict:[String:JSON]) -> [String:String] {

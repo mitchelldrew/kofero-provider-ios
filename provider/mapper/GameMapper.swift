@@ -30,7 +30,7 @@ public class GameMapper: IDataMapper<[ModelGame]> {
         var json = [JSON]()
         for game in data {
             var gameJson = JSON()
-            gameJson["id"].int32 = game.id
+            gameJson["uid"].int32 = game.uid
             gameJson["name"].string = game.name
             gameJson["charIds"].arrayObject = game.charIds
             gameJson["iconUrl"].string = game.iconUrl
@@ -44,6 +44,6 @@ public class GameMapper: IDataMapper<[ModelGame]> {
         for charIdElement in json["charIds"].arrayValue {
             characterIds.append(KotlinInt(int: charIdElement.int32Value))
         }
-        return ModelGame(id: json["id"].int32Value, name: json["name"].stringValue, characterIds: characterIds, iconUrl: json["iconUrl"].stringValue)
+        return ModelGame(uid: json["uid"].int32Value, name: json["name"].stringValue, characterIds: characterIds, iconUrl: json["iconUrl"].stringValue)
     }
 }

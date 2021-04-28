@@ -21,8 +21,9 @@ extension Int32 {
 }
 
 public protocol IUserDefaults {
-    func set(_:Int, forKey:String)
+    func set(_:Any?, forKey:String)
     func object(forKey:String) -> Any?
+    func removeObject(forKey:String)
 }
 
 extension UserDefaults: IUserDefaults {}

@@ -11,9 +11,7 @@ import presenter
 public class FavoritesProvider: IFavoritesProvider {
     private var listeners = [IProviderListener]()
     private let defaults:IUserDefaults
-    private let CHAR_KEY = "char"
-    private let GAME_KEY = "game"
-    private let MOVE_KEY = "move"
+    private let FAVS_KEY = "favs"
     
     public init(defaults:IUserDefaults){
         self.defaults = defaults
@@ -23,34 +21,37 @@ public class FavoritesProvider: IFavoritesProvider {
         listeners.append(listener)
     }
     
-    public func get(ids: [KotlinInt]) {
-        
-    }
-    
     public func removeListener(listener: IProviderListener) {
         listeners.removeAll{existingListener in return listener === existingListener}
     }
     
-    public func delete(item: ModelObj, type: IFavoritesProviderFavType) {
-        
-    }
     
-    public func save(item: ModelObj, type: IFavoritesProviderFavType) {
-        switch type {
-        case .char_: save(item: item, key: CHAR_KEY)
-        case .game: save(item: item, key: GAME_KEY)
-        case .move: save(item: item, key: MOVE_KEY)
-        default:
-           informListenersError()
+    public func get(ids: [KotlinInt]) {
+        if let favs = defaults.object(forKey: FAVS_KEY) as? [ModelObj]{
+            informListeners(favs: favs)
         }
     }
     
-    private func informListenersError(){
-        
+    public func delete(item: ModelObj) {
+        let favs = defaults.object(forKey: FAVS_KEY)
+        if var uFavs = favs as? [ModelObj] {
+            uFavs.removeAll{obj in return obj.uid == item.uid}
+            defaults.set(uFavs, forKey: FAVS_KEY)
+        }
     }
     
-    private func save(item: ModelObj, key: String) {
-        
+    public func save(item: ModelObj) {
+        let favs = defaults.object(forKey: FAVS_KEY)
+        if var uFavs = favs as? [ModelObj] {
+            uFavs.append(item)
+            defaults.set(uFavs, forKey: FAVS_KEY)
+        }
+    }
+    
+    private func informListeners(favs:[ModelObj]){
+        for listener in listeners {
+            listener.onReceive(ids: [], elements: favs)
+        }
     }
     
     
