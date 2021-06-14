@@ -68,9 +68,8 @@ open class ImageProvider: IImageProvider {
     }
     
     public func get(url: String) {
-        let lUrl = makeUrl(string: url)
         do{
-            informListeners(data: try Data(contentsOf: lUrl), url: url)
+            informListeners(data: try Data(contentsOf: makeUrl(string: url)), url: url)
         }
         catch {
             if let uRL = URL(string: url) {
