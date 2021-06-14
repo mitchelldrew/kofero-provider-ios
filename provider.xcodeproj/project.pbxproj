@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -169,6 +169,7 @@
 				4B7E600825E9A28D009684AE /* Sources */,
 				4B7E600925E9A28D009684AE /* Frameworks */,
 				4B7E600A25E9A28D009684AE /* Resources */,
+				4BB5B963264B09170056D973 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -222,6 +223,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4BB5B963264B09170056D973 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "sh copyProviderDebug.sh\n";
+		};
 		663BAAA53DB287065D40329E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

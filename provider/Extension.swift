@@ -51,9 +51,13 @@ public protocol IFileManager {
     func contents(atPath:String) -> Data?
     func createFile(atPath: String, contents: Data?, attributes: [FileAttributeKey : Any]?) -> Bool
     func removeItem(atPath: String) throws
+    func urls(for: FileManager.SearchPathDirectory, in: FileManager.SearchPathDomainMask) -> [URL]
+    func fileExists(atPath: String) -> Bool
 }
 
-extension FileManager: IFileManager{}
+extension FileManager: IFileManager{
+}
+
 
 protocol HasApply { }
 

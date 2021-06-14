@@ -53,6 +53,4 @@ public class FavoritesProvider: IFavoritesProvider {
             listener.onReceive(ids: [], elements: favs)
         }
     }
-    
-    
 }

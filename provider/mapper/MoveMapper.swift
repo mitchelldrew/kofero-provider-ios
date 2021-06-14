@@ -22,12 +22,7 @@ public class MoveMapper:IDataMapper<[ModelMove]>{
             var moveJson = JSON()
             moveJson["uid"].int32 = move.uid
             moveJson["name"].string = move.name
-            moveJson["startup"].stringValue = move.startup
-            moveJson["active"].stringValue = move.active
-            moveJson["recovery"].stringValue = move.recovery
-            moveJson["hitAdv"].stringValue = move.hitAdv
-            moveJson["blockAdv"].stringValue = move.blockAdv
-            moveJson["notes"].stringValue = move.notes
+            moveJson["attributes"].dictionaryObject = move.attributes
             json.append(moveJson)
         }
         return try encoder.encode(json)
@@ -43,6 +38,17 @@ public class MoveMapper:IDataMapper<[ModelMove]>{
     }
     
     private func serialize(json: JSON) -> ModelMove {
-        return ModelMove(uid: json["uid"].int32Value, name: json["name"].stringValue, startup: json["startup"].stringValue, active: json["active"].stringValue, recovery: json["recovery"].stringValue, hitAdv: json["hitAdv"].stringValue, blockAdv: json["blockAdv"].stringValue, notes: json["notes"].stringValue)
+        return ModelMove(uid: json["uid"].int32Value, name: json["name"].stringValue, attributes: transformDict(dict: json["attributes"].dictionaryValue))
+    }
+    
+    private func transformDict(dict:[String:JSON]) -> [String:String] {
+        var mDict = dict
+        var ret = [String:String]()
+        for key in dict.keys {
+            if let value = mDict.removeValue(forKey: key) {
+                ret.updateValue(value.stringValue, forKey: key)
+            }
+        }
+        return ret
     }
 }

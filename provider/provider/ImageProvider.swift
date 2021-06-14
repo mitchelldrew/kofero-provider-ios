@@ -32,24 +32,24 @@ open class ImageProvider: IImageProvider {
     
     private func informListeners(data:Data, url:String){
         for listener in listeners {
-            listener.onReceive(url: url, imgBase64: data.base64EncodedString())
+            listener.onReceive(url: url+"", imgBase64: data.base64EncodedString())
         }
     }
     
-    private func getFromDisk(url:String){
-        /*
-        DispatchQueue.global().async { [self] in
-            if(fileManager.fileExists(atPath: url)){
-                if let uData = fileManager.contents(atPath: url){
-                    informListeners(data: uData, url: url)
-                }
-            }
-        }
- */
+    private func makeUrl(string:String) -> URL {
+        return fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("\(string.hashValue)")
     }
     
     private func saveToDisk(data: Data, url: String){
-        
+        let path = makeUrl(string: url)
+        do {
+            try data.write(to: path, options: .atomic)
+            
+            let uData = try! Data(contentsOf: path)
+            informListeners(data: uData, url: url)
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
     private func getRestClosure(url:String) -> RestClosure {
@@ -57,8 +57,7 @@ open class ImageProvider: IImageProvider {
             if let uResponse = response as? HTTPURLResponse {
                 if let uData = data {
                     if(uResponse.statusCode == 200) {
-                        informListeners(data: uData, url: url)
-                        saveToDisk(data: uData, url: url)
+                        saveToDisk(data: uData, url: url + "")
                     }
                     else { informListenersNon200(url: url, response: uResponse)}
                 }
@@ -69,9 +68,17 @@ open class ImageProvider: IImageProvider {
     }
     
     public func get(url: String) {
-        getFromDisk(url: url)
-        if let uRL = URL(string: url) {
-            restManager.dataTask(with: URLRequest(url: uRL), completionHandler: getRestClosure(url:url)).resume()
+        let lUrl = makeUrl(string: url)
+        let newUrl = url + ""
+        do{
+            informListeners(data: try Data(contentsOf: lUrl), url: newUrl)
+            print("hello")
+        }
+        catch {
+            //print(error.localizedDescription)
+            if let uRL = URL(string: newUrl) {
+                restManager.dataTask(with: URLRequest(url: uRL), completionHandler: getRestClosure(url:newUrl)).resume()
+            }
         }
     }
     
