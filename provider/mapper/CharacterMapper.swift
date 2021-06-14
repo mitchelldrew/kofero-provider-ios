@@ -31,7 +31,7 @@ public class CharacterMapper:IDataMapper<[ModelCharacter]>{
             var charJson = JSON()
             charJson["uid"].int32 = char.uid
             charJson["name"].string = char.name
-            charJson["moveIds"].arrayObject = char.mvIds
+            charJson["moveIds"].arrayObject = char.moveIds
             charJson["attributes"].dictionaryObject = char.attributes
             charJson["iconUrl"].string = char.iconUrl
             json.append(charJson)

@@ -68,26 +68,6 @@ extension HasApply {
     }
 }
 
-extension ModelGame{
-    var charIds: [Int32] {
-        var ret = [Int32]()
-        for charId in self.characterIds {
-            ret.append(charId.int32Value)
-        }
-        return ret
-    }
-}
-
-extension ModelCharacter{
-    var mvIds: [Int32] {
-        var ret = [Int32]()
-        for moveId in self.moveIds {
-            ret.append(moveId.int32Value)
-        }
-        return ret
-    }
-}
-
 extension Provider{
     func get(ids:[Int32]){
         var kIds = [KotlinInt]()
