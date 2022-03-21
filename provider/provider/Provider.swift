@@ -73,13 +73,14 @@ open class Provider<O:ModelObj>: IProvider {
         }
     }
     
+    private func makeUrl(string:String) -> URL {
+        return fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("\(string.hashValue)")
+    }
+    
     
     private func saveToDisk(){
         do{
-            try fileManager.removeItem(atPath: fileManager.currentDirectoryPath + jsonFilename)
-            if(try !fileManager.createFile(atPath: fileManager.currentDirectoryPath + jsonFilename, contents: mapper.map(data: elements), attributes: nil)){
-                informListenersError(ids: [], error: KotlinException(message: "failed to create file"))
-             }
+            try mapper.map(data: elements).write(to: makeUrl(string: jsonFilename), options: .atomic)
         }
         catch {
             informListenersError(ids: [], error: KotlinException(error: error))
@@ -124,17 +125,14 @@ open class Provider<O:ModelObj>: IProvider {
     
     private func pullFromDisk(ids: [KotlinInt]) {
         isDiskPulled = true
-        if let json = fileManager.contents(atPath: fileManager.currentDirectoryPath + jsonFilename) {
+        let url = makeUrl(string: jsonFilename)
             do {
-                elements = try mapper.map(data: json)
+                elements = try mapper.map(data: Data(contentsOf: url))
             }
             catch {
-                informListenersError(ids: ids, error: KotlinException(message: "serialization error"))
+                informListenersError(ids: ids, error: KotlinException(message: "couldnt pull from disk"))
+                pullFromBundledJson(ids:ids)
             }
-        }
-        else {
-            pullFromBundledJson(ids:ids)
-        }
         if(isSatisfiable(request: ids)){
             informListeners(ids: ids, elements: retrieve(ids: ids))
         }
@@ -155,11 +153,11 @@ open class Provider<O:ModelObj>: IProvider {
     }
     
     
-    public func addListener(listener: IProviderListener) {
+    public func addListener(listener__ listener: IProviderListener) {
         listeners.append(listener)
     }
     
-    public func removeListener(listener: IProviderListener) {
+    public func removeListener(listener__ listener: IProviderListener) {
         listeners.removeAll{existingListener in return listener === existingListener}
     }
     

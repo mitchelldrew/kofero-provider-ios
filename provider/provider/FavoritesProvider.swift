@@ -17,11 +17,11 @@ public class FavoritesProvider: IFavoritesProvider {
         self.defaults = defaults
     }
     
-    public func addListener(listener: IProviderListener) {
+    public func addListener(listener__ listener: IProviderListener) {
         listeners.append(listener)
     }
     
-    public func removeListener(listener: IProviderListener) {
+    public func removeListener(listener__ listener: IProviderListener) {
         listeners.removeAll{existingListener in return listener === existingListener}
     }
     
