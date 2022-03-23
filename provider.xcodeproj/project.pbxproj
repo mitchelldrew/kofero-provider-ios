@@ -20,6 +20,9 @@
 		4B9F8DB625EC5343007F330C /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F8DB525EC5343007F330C /* Extension.swift */; };
 		4B9F8DBF25F2AC01007F330C /* Pods_provider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BE1F54D244B84048D74B04B /* Pods_provider.framework */; };
 		4B9F8ECC25F991C2007F330C /* CharacterMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F8ECB25F991C2007F330C /* CharacterMapper.swift */; };
+		4BBF121B27E8FCDF00B8550E /* LoggingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBF121A27E8FCDF00B8550E /* LoggingProvider.swift */; };
+		4BBF121F27E8FD5D00B8550E /* StateReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBF121E27E8FD5D00B8550E /* StateReducer.swift */; };
+		4BBF122327E8FDB800B8550E /* StateLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBF122227E8FDB800B8550E /* StateLogger.swift */; };
 		4BC42D1A261612010008C96A /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC42D19261612010008C96A /* Provider.swift */; };
 		4BC42D1D261669B70008C96A /* IDataEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC42D1C261669B70008C96A /* IDataEncoder.swift */; };
 		4BC42D202616720A0008C96A /* IEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC42D1F2616720A0008C96A /* IEncoder.swift */; };
@@ -41,6 +44,9 @@
 		4B91FB7E262E17D200A4A56A /* FavoritesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesProvider.swift; sourceTree = "<group>"; };
 		4B9F8DB525EC5343007F330C /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		4B9F8ECB25F991C2007F330C /* CharacterMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterMapper.swift; sourceTree = "<group>"; };
+		4BBF121A27E8FCDF00B8550E /* LoggingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggingProvider.swift; sourceTree = "<group>"; };
+		4BBF121E27E8FD5D00B8550E /* StateReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateReducer.swift; sourceTree = "<group>"; };
+		4BBF122227E8FDB800B8550E /* StateLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateLogger.swift; sourceTree = "<group>"; };
 		4BC42D19261612010008C96A /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		4BC42D1C261669B70008C96A /* IDataEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDataEncoder.swift; sourceTree = "<group>"; };
 		4BC42D1F2616720A0008C96A /* IEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IEncoder.swift; sourceTree = "<group>"; };
@@ -84,6 +90,7 @@
 		4B7E600E25E9A28D009684AE /* provider */ = {
 			isa = PBXGroup;
 			children = (
+				4BBF121D27E8FD4D00B8550E /* state */,
 				4BC42D30261BAE3C0008C96A /* mapper */,
 				4BC42D2F261BAE370008C96A /* encoder */,
 				4B9F8EC425F956D3007F330C /* provider */,
@@ -102,8 +109,18 @@
 				4BC42D19261612010008C96A /* Provider.swift */,
 				4B8A0C3C261BB523007006D6 /* ProviderCore.swift */,
 				4B91FB7E262E17D200A4A56A /* FavoritesProvider.swift */,
+				4BBF121A27E8FCDF00B8550E /* LoggingProvider.swift */,
 			);
 			path = provider;
+			sourceTree = "<group>";
+		};
+		4BBF121D27E8FD4D00B8550E /* state */ = {
+			isa = PBXGroup;
+			children = (
+				4BBF121E27E8FD5D00B8550E /* StateReducer.swift */,
+				4BBF122227E8FDB800B8550E /* StateLogger.swift */,
+			);
+			path = state;
 			sourceTree = "<group>";
 		};
 		4BC42D2F261BAE370008C96A /* encoder */ = {
@@ -272,14 +289,17 @@
 			files = (
 				4B7E602825E9D458009684AE /* IMapper.swift in Sources */,
 				4B7E602D25EAEAA3009684AE /* GameMapper.swift in Sources */,
+				4BBF121B27E8FCDF00B8550E /* LoggingProvider.swift in Sources */,
 				4BC42D1A261612010008C96A /* Provider.swift in Sources */,
 				4B7E602025E9A4E4009684AE /* ImageProvider.swift in Sources */,
 				4BC42D2D261B9C390008C96A /* JsonDataEncoder.swift in Sources */,
 				4B7E602425E9ADE1009684AE /* Typealias.swift in Sources */,
 				4B91FB7F262E17D200A4A56A /* FavoritesProvider.swift in Sources */,
+				4BBF121F27E8FD5D00B8550E /* StateReducer.swift in Sources */,
 				4B7E602A25E9D593009684AE /* IDataMapper.swift in Sources */,
 				4B78BFD225FC5E9A0015BFD7 /* MoveMapper.swift in Sources */,
 				4B8A0C3D261BB523007006D6 /* ProviderCore.swift in Sources */,
+				4BBF122327E8FDB800B8550E /* StateLogger.swift in Sources */,
 				4B9F8DB625EC5343007F330C /* Extension.swift in Sources */,
 				4B9F8ECC25F991C2007F330C /* CharacterMapper.swift in Sources */,
 				4BC42D202616720A0008C96A /* IEncoder.swift in Sources */,
